@@ -91,7 +91,12 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   const resp = tokenize(input.responsibilities)
   const all = [...skills, ...resp]
 
-  // Infer track and confidence
+  // Try to match explicit role/skill/responsibility + experience combinations (from reference grid)
+  const comboScores = ROLE_COMBINATIONS.map((c) => ({ c, score: scoreRoleCombo(input, skills, resp, c) }))
+  comboScores.sort((a, b) => b.score - a.score)
+  const bestCombo = comboScores[0]
+
+  // Infer track from keywords as a baseline
   let bestTrack = TRACKS[0]
   let bestScore = -1
   for (const t of TRACKS) {
@@ -101,20 +106,31 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
       bestScore = score
     }
   }
-  const confidence = Math.min(1, Math.max(0.3, bestScore / 5))
+
+  // If the combo strongly matches and suggests a track, prefer it
+  if (bestCombo && bestCombo.score >= 3 && bestCombo.c.trackId) {
+    const override = TRACKS.find((t) => t.id === bestCombo.c.trackId)
+    if (override) bestTrack = override
+  }
+
+  // Confidence blends keyword match and combo match
+  const keywordConf = Math.min(1, Math.max(0.3, bestScore / 5))
+  const comboConf = bestCombo ? Math.min(1, bestCombo.score / 6) : 0
+  const confidence = Math.min(1, Math.max(0.3, 0.6 * keywordConf + 0.4 * comboConf))
 
   // Compute gaps
   const core = CORE_BY_TRACK[bestTrack.id]
   const gaps = core.filter((c) => !all.some((w) => w.includes(c.split(" ")[0])))
 
-  // Next steps timeline based on experience
+  // Build next steps based on experience, then tailor first step to the predicted next role if available
   const y = input.yearsExperience
   const baseRole = input.currentRole || bestTrack.name
+  const nextLikelyRole = bestCombo && bestCombo.score >= 3 ? bestCombo.c.nextRole : undefined
   const nextSteps: RoadmapStep[] = []
   if (y < 3) {
     nextSteps.push(
       { timeframe: "0–6 months", title: `Strengthen ${bestTrack.name} foundations`, reason: `Solidify fundamentals and ship 2–3 portfolio examples in ${bestTrack.name}.` },
-      { timeframe: "6–18 months", title: `Progress to Senior ${baseRole.includes(bestTrack.name) ? baseRole : bestTrack.name}`, reason: "Own end-to-end initiatives and mentor juniors." },
+      { timeframe: "6–18 months", title: `Progress to Senior ${baseRole.includes(bestTrack.name) ? baseRole : bestTrack.name}` , reason: "Own end-to-end initiatives and mentor juniors." },
       { timeframe: "18–36 months", title: `${bestTrack.id === 'hrbp' ? 'HRBP' : 'Lead'} role readiness`, reason: "Demonstrate measurable business impact; lead cross-functional projects." },
     )
   } else if (y < 7) {
@@ -131,10 +147,21 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
     )
   }
 
+  if (nextLikelyRole) {
+    nextSteps[0] = {
+      timeframe: nextSteps[0].timeframe,
+      title: `Target next role: ${nextLikelyRole}`,
+      reason: "Based on your role, experience, and selected skills/responsibilities.",
+    }
+  }
+
   const certifications = CERTS_BY_TRACK[bestTrack.id]
   const resources = RESOURCES_BY_TRACK[bestTrack.id]
 
-  const summary = `${input.fullName.split(" ")[0]}, based on your ${y} years in ${input.currentRole || 'HR'}, your strongest trajectory is ${bestTrack.name}. The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
+  const summaryBase = `${input.fullName.split(" ")[0]}, based on your ${y} years in ${input.currentRole || 'HR'}, your strongest trajectory is ${bestTrack.name}.`
+  const summary = nextLikelyRole
+    ? `${summaryBase} Likely next role: ${nextLikelyRole}. The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
+    : `${summaryBase} The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
 
   const actionItems = [
     `Create a one-page growth plan with 3 OKRs tied to ${bestTrack.name} outcomes`,
