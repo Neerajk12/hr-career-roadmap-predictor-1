@@ -103,3 +103,62 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Additional design tokens and component utilities */
+@layer base {
+  :root {
+    /* Brand accents */
+    --brand: 258 85% 62%;
+    --brand-glow: 258 92% 70%;
+
+    /* Gradients */
+    --gradient-cta: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-glow)));
+    --gradient-surface: linear-gradient(180deg, hsl(var(--background)), hsl(var(--background) / 0.6));
+
+    /* Shadows */
+    --shadow-elevated: 0 10px 30px -10px hsl(var(--brand) / 0.30);
+    --shadow-glow: 0 0 0 1px hsl(var(--brand) / 0.12), 0 12px 40px hsl(var(--brand) / 0.22);
+
+    /* Motion */
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dark {
+    --brand: 258 85% 62%;
+    --brand-glow: 258 92% 70%;
+    --gradient-cta: linear-gradient(135deg, hsl(var(--brand)), hsl(var(--brand-glow)));
+    --gradient-surface: linear-gradient(180deg, hsl(var(--background)), hsl(var(--background) / 0.6));
+    --shadow-elevated: 0 10px 30px -10px hsl(var(--brand) / 0.35);
+    --shadow-glow: 0 0 0 1px hsl(var(--brand) / 0.18), 0 12px 40px hsl(var(--brand) / 0.32);
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply rounded-xl border p-6 shadow-sm; 
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-elevated);
+  }
+  .btn-hero {
+    @apply inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background;
+    background-image: var(--gradient-cta);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-glow);
+    transition: var(--transition-smooth);
+  }
+  .btn-hero:hover { filter: saturate(1.1) brightness(1.02); transform: translateY(-1px); }
+  .btn-hero:active { transform: translateY(0); }
+}
+
+@layer utilities {
+  .bg-hero {
+    background: radial-gradient(1200px 800px at var(--mx,50%) var(--my,20%), hsl(var(--brand) / 0.08), transparent 60%);
+  }
+  .text-gradient {
+    background-image: var(--gradient-cta);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}

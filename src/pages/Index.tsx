@@ -1,14 +1,355 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Helmet } from "react-helmet-async";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { buildRoadmap, type Roadmap } from "@/components/roadmap/engine";
+
+const schema = z.object({
+  fullName: z.string().min(2, "Please enter your full name"),
+  email: z.string().email("Please enter a valid email"),
+  currentRole: z.string().min(2, "Please enter your current role"),
+  yearsExperience: z
+    .string()
+    .refine((v) => !Number.isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 50, "Enter 0–50"),
+  skills: z.string().min(3, "List some skills (comma separated)"),
+  responsibilities: z.string().min(5, "Describe your key responsibilities"),
+});
+
+type FormValues = z.infer<typeof schema>;
 
 const Index = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [result, setResult] = useState<Roadmap | null>(null);
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      currentRole: "HR Generalist",
+      yearsExperience: "3",
+      skills: "recruiting, onboarding, excel",
+      responsibilities: "support hiring, onboarding, employee relations",
+    },
+  });
+
+  // Signature interaction: pointer-reactive gradient
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      el.style.setProperty("--mx", `${x}%`);
+      el.style.setProperty("--my", `${Math.max(10, y)}%`);
+    };
+    el.addEventListener("mousemove", onMove);
+    return () => el.removeEventListener("mousemove", onMove);
+  }, []);
+
+  const onSubmit = (values: FormValues) => {
+    const roadmap = buildRoadmap({
+      fullName: values.fullName,
+      email: values.email,
+      currentRole: values.currentRole,
+      yearsExperience: Number(values.yearsExperience),
+      skills: values.skills.split(",").map((s) => s.trim()).filter(Boolean),
+      responsibilities: values.responsibilities,
+    });
+    setResult(roadmap);
+  };
+
+  const jsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "HR Career Roadmap Predictor",
+      applicationCategory: "BusinessApplication",
+      description:
+        "Generate a personalized HR career roadmap from your skills, experience, and role.",
+      url: "/",
+      author: { "@type": "Organization", name: "Lovable" },
+    }),
+    []
+  );
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main ref={containerRef} className="min-h-screen bg-hero">
+      <Helmet>
+        <title>HR Career Roadmap Predictor | Plan Your HR Growth</title>
+        <meta
+          name="description"
+          content="Generate a personalized HR career roadmap from your skills, experience, and role. Plan next steps, skills, and certifications."
+        />
+        <link rel="canonical" href="/" />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
+
+      <section className="container mx-auto px-4 py-12 md:py-16">
+        <div className="mx-auto max-w-5xl">
+          <header className="text-center mb-10 md:mb-14">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+              <span className="text-gradient">HR Career Roadmap</span> Predictor
+            </h1>
+            <p className="mt-3 text-muted-foreground text-base md:text-lg">
+              Enter your HR skills, responsibilities, experience, and role. We’ll generate a clear, practical career roadmap.
+            </p>
+          </header>
+
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-start">
+            <Card className="glass-card">
+              <CardHeader>
+                <CardTitle>Tell us about you</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="fullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Full name</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Jane Doe" aria-label="Full name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="jane@company.com" aria-label="Email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="currentRole"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Current role</FormLabel>
+                            <FormControl>
+                              <Input placeholder="HR Generalist" aria-label="Current role" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="yearsExperience"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Years of experience</FormLabel>
+                            <FormControl>
+                              <Input type="number" min={0} max={50} placeholder="3" aria-label="Years of experience" {...field} />
+                            </FormControl>
+                            <FormDescription>0–50 years</FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name="skills"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Key HR skills</FormLabel>
+                          <FormControl>
+                            <Input placeholder="e.g., recruiting, employee relations, HRIS, data analysis" aria-label="Key HR skills" {...field} />
+                          </FormControl>
+                          <FormDescription>Comma-separated list</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="responsibilities"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Main responsibilities</FormLabel>
+                          <FormControl>
+                            <Textarea rows={5} placeholder="e.g., manage full-cycle recruiting, support onboarding, maintain HRIS, handle employee relations" aria-label="Main responsibilities" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="pt-2 flex gap-3">
+                      <Button type="submit" variant="hero" className="px-6 h-12">Generate roadmap</Button>
+                      <Button type="button" variant="outline" onClick={() => { form.reset(); setResult(null); }}>Reset</Button>
+                    </div>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-4">
+              {!result ? (
+                <Card className="glass-card">
+                  <CardHeader>
+                    <CardTitle>Your personalized plan appears here</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground text-sm">
+                      After you submit the form, we’ll show your predicted HR track, skill gaps, certifications, resources, and a 36-month step-by-step roadmap.
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <RoadmapView result={result} />
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 };
+
+function RoadmapView({ result }: { result: Roadmap }) {
+  const downloadJSON = () => {
+    const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `hr-roadmap-${result.track.replace(/\s+/g, '-').toLowerCase()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="space-y-4">
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Recommended Track: {result.track}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground">Confidence: {(result.confidence * 100).toFixed(0)}%</p>
+          <p>{result.summary}</p>
+          <div className="flex gap-3 pt-1">
+            <Button variant="outline" onClick={downloadJSON}>Download JSON</Button>
+            <Button variant="secondary" onClick={() => window.print()}>Print</Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Next 36 months</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ol className="space-y-3">
+            {result.nextSteps.map((s, i) => (
+              <li key={i} className="rounded-md border p-3">
+                <div className="text-sm text-muted-foreground">{s.timeframe}</div>
+                <div className="font-medium">{s.title}</div>
+                <div className="text-sm text-muted-foreground">{s.reason}</div>
+              </li>
+            ))}
+          </ol>
+        </CardContent>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-4">
+        <Card className="glass-card">
+          <CardHeader>
+            <CardTitle>Top skills to develop</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc pl-5 space-y-1">
+              {result.skillsToDevelop.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-card">
+          <CardHeader>
+            <CardTitle>Certifications</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc pl-5 space-y-1">
+              {result.certifications.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Resources</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-5 space-y-1">
+            {result.resources.map((r, i) => (
+              <li key={i}>
+                <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open resource ${r.title}`}>
+                  {r.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Action items</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-5 space-y-1">
+            {result.actionItems.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
 
 export default Index;
