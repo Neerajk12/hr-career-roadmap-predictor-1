@@ -78,10 +78,175 @@ const RESOURCES_BY_TRACK: Record<string, { title: string; url: string }[]> = {
   ],
 }
 
+type RoleCombo = {
+  rolePatterns: string[]
+  keySkills: string[]
+  responsibilities: string[]
+  minExp: number
+  maxExp?: number
+  nextRole: string
+  trackId?: string
+}
+
+const ROLE_COMBINATIONS: RoleCombo[] = [
+  {
+    rolePatterns: ["hr generalist", "hr operations specialist", "hr operations"],
+    keySkills: ["hr operations", "employee relations", "compliance"],
+    responsibilities: ["onboarding", "policy administration", "training coordination", "payroll support"],
+    minExp: 2,
+    maxExp: 7,
+    nextRole: "HR Manager / Employee Relations Manager",
+    trackId: "ops",
+  },
+  {
+    rolePatterns: ["recruiter", "recruitment manager", "talent acquisition"],
+    keySkills: ["recruitment", "talent acquisition", "hr operations"],
+    responsibilities: ["sourcing candidates", "interview scheduling", "onboarding", "policy administration"],
+    minExp: 2,
+    maxExp: 7,
+    nextRole: "Senior Recruiter / Talent Acquisition Director",
+    trackId: "ta",
+  },
+  {
+    rolePatterns: [
+      "learning & development specialist",
+      "l&d specialist",
+      "learning and development",
+    ],
+    keySkills: ["learning & development", "performance management", "hr operations"],
+    responsibilities: ["training coordination", "onboarding", "engagement programs"],
+    minExp: 2,
+    maxExp: 7,
+    nextRole: "HRBP / L&D Manager",
+    trackId: "ld",
+  },
+  {
+    rolePatterns: [
+      "employee relations specialist",
+      "labor relations specialist",
+      "employee/labor relations specialist",
+    ],
+    keySkills: ["employee relations", "labor relations", "compliance"],
+    responsibilities: [
+      "grievance handling",
+      "union/labor relations",
+      "compliance & audits",
+      "policy administration",
+    ],
+    minExp: 2,
+    maxExp: 7,
+    nextRole: "Employee Relations Manager / HR Manager",
+    trackId: "hrbp",
+  },
+  {
+    rolePatterns: ["hr assistant", "hr executive"],
+    keySkills: ["recruitment", "hr operations", "payroll"],
+    responsibilities: [
+      "interview scheduling",
+      "onboarding",
+      "sourcing candidates",
+      "employee documentation",
+    ],
+    minExp: 0,
+    maxExp: 2,
+    nextRole: "Recruitment Coordinator / Talent Acquisition Executive",
+    trackId: "ops",
+  },
+  {
+    rolePatterns: ["recruitment coordinator"],
+    keySkills: ["recruitment", "talent acquisition", "hr operations"],
+    responsibilities: [
+      "sourcing candidates",
+      "interview scheduling",
+      "onboarding",
+    ],
+    minExp: 0,
+    maxExp: 2,
+    nextRole: "Recruiter / HR Generalist",
+    trackId: "ta",
+  },
+  {
+    rolePatterns: ["talent acquisition executive"],
+    keySkills: ["recruitment", "talent acquisition", "learning & development"],
+    responsibilities: [
+      "sourcing candidates",
+      "interview scheduling",
+      "onboarding",
+      "training coordination",
+    ],
+    minExp: 0,
+    maxExp: 2,
+    nextRole: "Recruiter / Talent Acquisition Manager",
+    trackId: "ta",
+  },
+  {
+    rolePatterns: ["hr manager", "hr director"],
+    keySkills: [
+      "hr operations",
+      "employee relations",
+      "compliance",
+      "performance management",
+    ],
+    responsibilities: [
+      "policy administration",
+      "compliance & audits",
+      "training coordination",
+      "employee documentation",
+    ],
+    minExp: 8,
+    maxExp: 12,
+    nextRole: "HR Director / CHRO / VP HR",
+    trackId: "hrbp",
+  },
+  {
+    rolePatterns: ["hr business partner", "hrbp"],
+    keySkills: ["performance management", "hr operations", "employee relations"],
+    responsibilities: [
+      "engagement programs",
+      "policy administration",
+      "compliance & audits",
+    ],
+    minExp: 7,
+    maxExp: 10,
+    nextRole: "Director HR / CHRO",
+    trackId: "hrbp",
+  },
+  {
+    rolePatterns: ["chro", "vp hr", "director of hr"],
+    keySkills: [
+      "hr operations",
+      "performance management",
+      "compliance",
+      "compensation & benefits",
+    ],
+    responsibilities: [
+      "policy administration",
+      "engagement programs",
+      "compliance & audits",
+      "training coordination",
+    ],
+    minExp: 12,
+    maxExp: 40,
+    nextRole: "Top-most HR Executive",
+    trackId: "hrbp",
+  },
+]
+
+function scoreRoleCombo(input: RoadmapInput, skills: string[], resp: string[], combo: RoleCombo) {
+  const role = (input.currentRole || '').toLowerCase()
+  const inExpRange = input.yearsExperience >= combo.minExp && (combo.maxExp == null || input.yearsExperience <= combo.maxExp)
+  const nearExp = Math.abs(input.yearsExperience - combo.minExp) <= 1 || (combo.maxExp != null && Math.abs(input.yearsExperience - combo.maxExp) <= 1)
+  const roleHit = combo.rolePatterns.some((p) => role.includes(p)) ? 3 : 0
+  const skillHits = combo.keySkills.reduce((acc, s) => acc + (skills.some((k) => k.includes(s.toLowerCase())) ? 1 : 0), 0)
+  const respHits = combo.responsibilities.reduce((acc, r) => acc + (resp.some((rr) => rr.includes(r.toLowerCase())) ? 0.8 : 0), 0)
+  const expScore = inExpRange ? 2 : nearExp ? 1 : 0
+  return roleHit + skillHits + respHits + expScore
+}
+
 function tokenize(input: string | string[]): string[] {
   const text = Array.isArray(input) ? input.join(",") : input
   return text
-    .split(/[,\n]/g)
+    .split(/[\,\n]/g)
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean)
 }
