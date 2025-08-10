@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -26,6 +26,34 @@ import {
 } from "@/components/ui/select";
 import { buildRoadmap, type Roadmap } from "@/components/roadmap/engine";
 
+const SKILL_OPTIONS = [
+  "Recruitment",
+  "Talent Acquisition",
+  "Employee Relations",
+  "Labor Relations",
+  "Learning & Development",
+  "Compensation & Benefits",
+  "Payroll",
+  "HR Operations",
+  "Compliance",
+  "HRIS",
+  "Performance Management",
+] as const;
+
+const RESPONSIBILITY_OPTIONS = [
+  "Sourcing candidates",
+  "Interview scheduling",
+  "Onboarding",
+  "Employee documentation",
+  "Payroll support",
+  "Policy administration",
+  "Training coordination",
+  "Grievance handling",
+  "Union/labor relations",
+  "Engagement programs",
+  "Compliance & audits",
+] as const;
+
 const schema = z.object({
   fullName: z.string().min(2, "Please enter your full name"),
   email: z.string().email("Please enter a valid email"),
@@ -33,8 +61,8 @@ const schema = z.object({
   yearsExperience: z
     .string()
     .refine((v) => !Number.isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 50, "Enter 0–50"),
-  skills: z.string().min(3, "List some skills (comma separated)"),
-  responsibilities: z.string().min(5, "Describe your key responsibilities"),
+  skills: z.array(z.string()).min(3, "Select at least 3 skills"),
+  responsibilities: z.array(z.string()).min(3, "Select at least 3 responsibilities"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -50,8 +78,8 @@ const Index = () => {
       email: "",
       currentRole: "HR Generalist",
       yearsExperience: "3",
-      skills: "recruiting, onboarding, excel",
-      responsibilities: "support hiring, onboarding, employee relations",
+      skills: [],
+      responsibilities: [],
     },
   });
 
@@ -76,8 +104,8 @@ const Index = () => {
       email: values.email,
       currentRole: values.currentRole,
       yearsExperience: Number(values.yearsExperience),
-      skills: values.skills.split(",").map((s) => s.trim()).filter(Boolean),
-      responsibilities: values.responsibilities,
+      skills: values.skills,
+      responsibilities: values.responsibilities.join(", "),
     });
     setResult(roadmap);
   };
@@ -192,10 +220,30 @@ const Index = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Key HR skills</FormLabel>
-                          <FormControl>
-                            <Input placeholder="e.g., recruiting, employee relations, HRIS, data analysis" aria-label="Key HR skills" {...field} />
-                          </FormControl>
-                          <FormDescription>Comma-separated list</FormDescription>
+                          <FormDescription>Select at least 3</FormDescription>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {SKILL_OPTIONS.map((opt, idx) => {
+                              const id = `skill-${idx}`;
+                              const selected = Array.isArray(field.value) && field.value.includes(opt);
+                              return (
+                                <div key={opt} className="flex items-center gap-2">
+                                  <Checkbox
+                                    id={id}
+                                    checked={selected}
+                                    onCheckedChange={(checked) => {
+                                      const prev = Array.isArray(field.value) ? field.value : [];
+                                      if (checked === true) field.onChange([...prev, opt]);
+                                      else field.onChange(prev.filter((v) => v !== opt));
+                                    }}
+                                    aria-label={`Select skill ${opt}`}
+                                  />
+                                  <label htmlFor={id} className="text-sm">
+                                    {opt}
+                                  </label>
+                                </div>
+                              );
+                            })}
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -207,9 +255,30 @@ const Index = () => {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Main responsibilities</FormLabel>
-                          <FormControl>
-                            <Textarea rows={5} placeholder="e.g., manage full-cycle recruiting, support onboarding, maintain HRIS, handle employee relations" aria-label="Main responsibilities" {...field} />
-                          </FormControl>
+                          <FormDescription>Select at least 3</FormDescription>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {RESPONSIBILITY_OPTIONS.map((opt, idx) => {
+                              const id = `resp-${idx}`;
+                              const selected = Array.isArray(field.value) && field.value.includes(opt);
+                              return (
+                                <div key={opt} className="flex items-center gap-2">
+                                  <Checkbox
+                                    id={id}
+                                    checked={selected}
+                                    onCheckedChange={(checked) => {
+                                      const prev = Array.isArray(field.value) ? field.value : [];
+                                      if (checked === true) field.onChange([...prev, opt]);
+                                      else field.onChange(prev.filter((v) => v !== opt));
+                                    }}
+                                    aria-label={`Select responsibility ${opt}`}
+                                  />
+                                  <label htmlFor={id} className="text-sm">
+                                    {opt}
+                                  </label>
+                                </div>
+                              );
+                            })}
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )}
