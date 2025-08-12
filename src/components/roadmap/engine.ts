@@ -21,6 +21,7 @@ export type Roadmap = {
   skillsToDevelop: string[]
   certifications: string[]
   resources: { title: string; url: string }[]
+  kekaCourses: { title: string; url: string }[]
   actionItems: string[]
 }
 
@@ -75,6 +76,37 @@ const RESOURCES_BY_TRACK: Record<string, { title: string; url: string }[]> = {
   ops: [
     { title: "Workday Learning", url: "https://www.workday.com/" },
     { title: "Lean Basics", url: "https://www.coursera.org/learn/lean-six-sigma" },
+  ],
+}
+
+const KEKA_COURSES_BY_TRACK: Record<string, { title: string; url: string }[]> = {
+  ta: [
+    { title: "Keka ATS Certification course", url: "https://academy.keka.com/courses/keka-hire-ats-certification/" },
+    { title: "HR BootCamp Masterclass Certification", url: "https://academy.keka.com/courses/hr-bootcamp/" },
+  ],
+  hrbp: [
+    { title: "HR Generalist Certification Course", url: "https://academy.keka.com/courses/hr-generalist-certification-course/" },
+    { title: "Employee Engagement Certification Course", url: "https://academy.keka.com/courses/employee-engagement-course/" },
+    { title: "PMS (Performance Management) Certification Course", url: "https://academy.keka.com/courses/performance-management/" },
+    { title: "POSH Certification Course", url: "https://academy.keka.com/courses/posh-certification-fundamentals-for-hr/" },
+  ],
+  cb: [
+    { title: "Compensation and Benefits Certification Course", url: "https://academy.keka.com/courses/compensation-and-benefits/" },
+    { title: "India Payroll Certification Course", url: "https://academy.keka.com/courses/indian-payroll/" },
+  ],
+  ld: [
+    { title: "HR BootCamp Masterclass Certification", url: "https://academy.keka.com/courses/hr-bootcamp/" },
+    { title: "AI in HR Certification Course", url: "https://academy.keka.com/courses/ai-in-hr/" },
+    { title: "Employee Engagement Certification Course", url: "https://academy.keka.com/courses/employee-engagement-course/" },
+  ],
+  pa: [
+    { title: "People Analytics Certification Course", url: "https://academy.keka.com/courses/people-analytics-certification/" },
+    { title: "AI in HR Certification Course", url: "https://academy.keka.com/courses/ai-in-hr/" },
+  ],
+  ops: [
+    { title: "Core HR Certification Course", url: "https://academy.keka.com/courses/core-hr/" },
+    { title: "India Payroll Certification Course", url: "https://academy.keka.com/courses/indian-payroll/" },
+    { title: "HR Generalist Certification Course", url: "https://academy.keka.com/courses/hr-generalist-certification-course/" },
   ],
 }
 
@@ -322,7 +354,7 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
 
   const certifications = CERTS_BY_TRACK[bestTrack.id]
   const resources = RESOURCES_BY_TRACK[bestTrack.id]
-
+  const kekaCourses = KEKA_COURSES_BY_TRACK[bestTrack.id] ?? []
   const summaryBase = `${input.fullName.split(" ")[0]}, based on your ${y} years in ${input.currentRole || 'HR'}, your strongest trajectory is ${bestTrack.name}.`
   const summary = nextLikelyRole
     ? `${summaryBase} Likely next role: ${nextLikelyRole}. The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
@@ -343,6 +375,7 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
     skillsToDevelop: gaps.slice(0, 5),
     certifications,
     resources,
+    kekaCourses,
     actionItems,
   }
 }

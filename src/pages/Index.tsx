@@ -426,6 +426,27 @@ function RoadmapView({ result }: { result: Roadmap }) {
 
       <Card className="glass-card">
         <CardHeader>
+          <CardTitle>Keka Academy Courses</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {result.kekaCourses && result.kekaCourses.length > 0 ? (
+            <ul className="list-disc pl-5 space-y-1">
+              {result.kekaCourses.map((r, i) => (
+                <li key={i}>
+                  <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open Keka Academy course ${r.title}`}>
+                    {r.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-muted-foreground">No specific Keka Academy courses found for this track.</p>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="glass-card">
+        <CardHeader>
           <CardTitle>Resources</CardTitle>
         </CardHeader>
         <CardContent>
