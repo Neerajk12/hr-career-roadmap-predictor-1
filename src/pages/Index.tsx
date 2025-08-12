@@ -381,7 +381,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
 
       <Card className="glass-card">
         <CardHeader>
-          <CardTitle>Next 36 months</CardTitle>
+          <CardTitle>3 years plan</CardTitle>
         </CardHeader>
         <CardContent>
           <ol className="space-y-3">
