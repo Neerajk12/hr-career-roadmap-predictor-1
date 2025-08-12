@@ -54,6 +54,30 @@ const RESPONSIBILITY_OPTIONS = [
   "Compliance & audits",
 ] as const;
 
+const ROLE_OPTIONS = [
+  "HR Assistant",
+  "HR Executive",
+  "HR Coordinator",
+  "HR Generalist",
+  "HR Operations Specialist",
+  "HR Manager",
+  "HR Business Partner",
+  "Recruitment Coordinator",
+  "Recruiter",
+  "Senior Recruiter",
+  "Talent Acquisition Specialist",
+  "Talent Acquisition Manager",
+  "Learning & Development Specialist",
+  "Employee Relations Specialist",
+  "Labor Relations Specialist",
+  "Compensation & Benefits Analyst",
+  "Payroll Specialist",
+  "HRIS Analyst",
+  "People Analytics Analyst",
+  "HR Director",
+  "CHRO / VP HR",
+] as const;
+
 const schema = z.object({
   fullName: z.string().min(2, "Please enter your full name"),
   email: z.string().email("Please enter a valid email"),
@@ -191,7 +215,18 @@ const Index = () => {
                           <FormItem>
                             <FormLabel>Current role</FormLabel>
                             <FormControl>
-                              <Input placeholder="HR Generalist" aria-label="Current role" {...field} />
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <SelectTrigger aria-label="Current role">
+                                  <SelectValue placeholder="Select your current role" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  {ROLE_OPTIONS.map((role) => (
+                                    <SelectItem key={role} value={role}>
+                                      {role}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
