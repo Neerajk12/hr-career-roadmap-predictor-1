@@ -17,29 +17,21 @@ const schema = z.object({
   email: z.string().email("Enter a valid email"),
   phone: z.string().min(7, "Phone number is required"),
   company: z.string().min(1, "Company name is required"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 type FormValues = z.infer<typeof schema>;
 
-function randomPassword(length = 16) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+[]{}|;:,.<>?";
-  const array = new Uint32Array(length);
-  crypto.getRandomValues(array);
-  return Array.from(array, (x) => chars[x % chars.length]).join("");
-}
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
-  const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { name: "", email: "", phone: "", company: "" } });
+  const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { name: "", email: "", phone: "", company: "", password: "" } });
 
   const onSubmit = async (values: FormValues) => {
-    const tempPassword = randomPassword();
-    const redirectUrl = `${window.location.origin}/auth/first-login`;
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: values.email,
-      password: tempPassword,
+      password: values.password,
       options: {
-        emailRedirectTo: redirectUrl,
         data: { name: values.name, phone: values.phone, company_name: values.company },
       },
     });
@@ -49,8 +41,19 @@ const Signup: React.FC = () => {
       return;
     }
 
-    toast({ title: "Check your email", description: "We sent a confirmation link. After confirming, set your password." });
-    navigate("/auth/login");
+    if (!data.session) {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+      if (signInError) {
+        toast({ title: "Sign in required", description: signInError.message });
+        return;
+      }
+    }
+
+    toast({ title: "Account created", description: "Welcome! Redirecting to your dashboard..." });
+    navigate("/main");
   };
 
   return (
@@ -101,6 +104,25 @@ const Signup: React.FC = () => {
 
           <FormField
             control={form.control}
+            name="password"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Create a strong password"
+                    className={cn(fieldState.error && "border-destructive focus-visible:ring-destructive")}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="phone"
             render={({ field, fieldState }) => (
               <FormItem>
@@ -139,7 +161,7 @@ const Signup: React.FC = () => {
             <Button type="submit" variant="hero" className="w-full">Create account</Button>
           </div>
 
-          <p className="text-xs text-muted-foreground">By signing up you consent to email communications.</p>
+          
         </form>
       </Form>
 

@@ -8,7 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
-import FirstLogin from "./pages/auth/FirstLogin";
+
 import MainPage from "./pages/Main";
 
 const queryClient = new QueryClient();
@@ -24,7 +24,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth/signup" element={<Signup />} />
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/auth/first-login" element={<FirstLogin />} />
+            
             <Route path="/main" element={<MainPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
