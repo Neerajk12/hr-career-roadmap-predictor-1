@@ -79,11 +79,12 @@ const ROLE_OPTIONS = [
 ] as const;
 
 const schema = z.object({
-  fullName: z.string().min(2, "Please enter your full name"),
-  email: z.string().email("Please enter a valid email"),
-  currentRole: z.string().min(2, "Please enter your current role"),
+  fullName: z.string().min(1, "Please fill the necessary field"),
+  email: z.string().min(1, "Please fill the necessary field").email("Please enter a valid email"),
+  currentRole: z.string().min(1, "Please fill the necessary field"),
   yearsExperience: z
     .string()
+    .min(1, "Please fill the necessary field")
     .refine((v) => !Number.isNaN(Number(v)) && Number(v) >= 0 && Number(v) <= 50, "Enter 0–50"),
   skills: z.array(z.string()).min(3, "Select at least 3 skills"),
   responsibilities: z.array(z.string()).min(3, "Select at least 3 responsibilities"),
@@ -100,7 +101,7 @@ const Index = () => {
     defaultValues: {
       fullName: "",
       email: "",
-      currentRole: "HR Generalist",
+      currentRole: "",
       yearsExperience: "3",
       skills: [],
       responsibilities: [],
@@ -215,7 +216,7 @@ const Index = () => {
                           <FormItem>
                             <FormLabel>Current role</FormLabel>
                             <FormControl>
-                              <Select onValueChange={field.onChange} value={field.value}>
+                              <Select onValueChange={field.onChange} value={field.value || undefined}>
                                 <SelectTrigger aria-label="Current role">
                                   <SelectValue placeholder="Select your current role" />
                                 </SelectTrigger>
