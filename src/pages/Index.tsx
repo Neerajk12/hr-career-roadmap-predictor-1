@@ -55,27 +55,21 @@ const RESPONSIBILITY_OPTIONS = [
 ] as const;
 
 const ROLE_OPTIONS = [
-  "HR Assistant",
-  "HR Executive",
-  "HR Coordinator",
-  "HR Generalist",
-  "HR Operations Specialist",
-  "HR Manager",
-  "HR Business Partner",
+  "HR Assistant/Human Resources Assistant",
   "Recruitment Coordinator",
+  "HR Specialist/Human Resource Specialist",
+  "HR Generalist",
+  "HR Administrator",
   "Recruiter",
-  "Senior Recruiter",
-  "Talent Acquisition Specialist",
-  "Talent Acquisition Manager",
   "Learning & Development Specialist",
   "Employee Relations Specialist",
-  "Labor Relations Specialist",
-  "Compensation & Benefits Analyst",
-  "Payroll Specialist",
-  "HRIS Analyst",
-  "People Analytics Analyst",
-  "HR Director",
-  "CHRO / VP HR",
+  "HR Business Partner (HRBP)",
+  "HR Manager",
+  "Senior Recruiter/Talent Acquisition Manager",
+  "Director of Human Resources/HR Director",
+  "Vice President, Human Resources (VP HR)",
+  "Chief Human Resources Officer (CHRO)/Chief People Officer",
+  "HR Consultant",
 ] as const;
 
 const schema = z.object({
