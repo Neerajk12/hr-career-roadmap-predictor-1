@@ -367,7 +367,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
           <p className="text-sm text-muted-foreground">Confidence: {(result.confidence * 100).toFixed(0)}%</p>
           <p>{result.summary}</p>
           <div className="flex gap-3 pt-1">
-            <Button variant="outline" onClick={downloadJSON}>Download JSON</Button>
             <Button variant="secondary" onClick={() => window.print()}>Print</Button>
           </div>
         </CardContent>
@@ -383,10 +382,34 @@ function RoadmapView({ result }: { result: Roadmap }) {
               <li key={i} className="rounded-md border p-3">
                 <div className="text-sm text-muted-foreground">{s.timeframe}</div>
                 <div className="font-medium">{s.title}</div>
-                <div className="text-sm text-muted-foreground">{s.reason}</div>
+                <div className="text-sm text-muted-foreground mb-2">{s.reason}</div>
+                <div className="text-xs text-muted-foreground">
+                  <strong>Skills impacted:</strong> {s.skillsImpacted.join(", ")}
+                </div>
               </li>
             ))}
           </ol>
+        </CardContent>
+      </Card>
+
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Keka Academy Courses</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {result.kekaCourses && result.kekaCourses.length > 0 ? (
+            <ul className="list-disc pl-5 space-y-1">
+              {result.kekaCourses.map((r, i) => (
+                <li key={i}>
+                  <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open Keka Academy course ${r.title}`}>
+                    {r.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-muted-foreground">No specific Keka Academy courses found for this track.</p>
+          )}
         </CardContent>
       </Card>
 
@@ -420,27 +443,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
 
       <Card className="glass-card">
         <CardHeader>
-          <CardTitle>Keka Academy Courses</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {result.kekaCourses && result.kekaCourses.length > 0 ? (
-            <ul className="list-disc pl-5 space-y-1">
-              {result.kekaCourses.map((r, i) => (
-                <li key={i}>
-                  <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open Keka Academy course ${r.title}`}>
-                    {r.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">No specific Keka Academy courses found for this track.</p>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card className="glass-card">
-        <CardHeader>
           <CardTitle>Resources</CardTitle>
         </CardHeader>
         <CardContent>
@@ -458,14 +460,16 @@ function RoadmapView({ result }: { result: Roadmap }) {
 
       <Card className="glass-card">
         <CardHeader>
-          <CardTitle>Action items</CardTitle>
+          <CardTitle>Monthly Action Plan</CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="list-disc pl-5 space-y-1">
-            {result.actionItems.map((s, i) => (
-              <li key={i}>{s}</li>
+          <div className="space-y-3">
+            {result.actionItems.map((item, i) => (
+              <div key={i} className="rounded-md border p-3">
+                <div className="font-medium text-sm">{item}</div>
+              </div>
             ))}
-          </ul>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -11,6 +11,7 @@ export type RoadmapStep = {
   timeframe: string
   title: string
   reason: string
+  skillsImpacted: string[]
 }
 
 export type Roadmap = {
@@ -319,6 +320,60 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   const core = CORE_BY_TRACK[bestTrack.id]
   const gaps = core.filter((c) => !all.some((w) => w.includes(c.split(" ")[0])))
 
+  // Map role to development plan
+  const getPlanForRole = (role: string): string => {
+    const earlyFoundations = ["HR Assistant/Human Resources Assistant", "HR Administrator", "Recruitment Coordinator", "Recruiter"];
+    const coreOperations = ["HR Specialist/Human Resource Specialist", "HR Generalist", "Employee Relations Specialist", "Learning & Development Specialist"];
+    const strategicLeadership = ["HR Business Partner (HRBP)", "HR Manager", "Senior Recruiter/Talent Acquisition Manager"];
+    const executiveLeadership = ["Director of Human Resources/HR Director", "Vice President, Human Resources (VP HR)", "Chief Human Resources Officer (CHRO)/Chief People Officer", "HR Consultant"];
+
+    if (earlyFoundations.includes(role)) return "Early HR Foundations";
+    if (coreOperations.includes(role)) return "Core HR Operations";
+    if (strategicLeadership.includes(role)) return "Strategic HR & Leadership";
+    if (executiveLeadership.includes(role)) return "Executive HR Leadership & Consulting";
+    return "Core HR Operations"; // default
+  };
+
+  const getActionItemsForPlan = (planType: string): string[] => {
+    switch (planType) {
+      case "Early HR Foundations":
+        return [
+          "Week 1: Study core HR concepts (recruitment process, payroll basics, company policies)",
+          "Week 2: Practice resume screening, schedule interviews, and participate in onboarding admins",
+          "Week 3: Learn HR software & documentation (HRIS, ATS basics, Excel)",
+          "Week 4: Shadow experienced HR/recruitment staff, take mock interviews, and solicit feedback"
+        ];
+      case "Core HR Operations":
+        return [
+          "Week 1: Deepen knowledge in one HR specialization (C&B, L&D, ER, workforce analytics)",
+          "Week 2: Participate in or lead a small HR project (training, employee engagement, policy writing)",
+          "Week 3: Analyze a real HR case (dispute, performance, succession); discuss solutions with peers/mentors",
+          "Week 4: Present learnings to team or mentor; apply software tools to new area (e.g., make an LMS course)"
+        ];
+      case "Strategic HR & Leadership":
+        return [
+          "Week 1: Build business acumen—review business strategy, read latest HR and industry trends",
+          "Week 2: Lead a cross-functional project or HR initiative (e.g., change management, diversity program)",
+          "Week 3: Collect and analyze HR metrics, deliver data-driven insights to management",
+          "Week 4: Mentor a junior HR staff, contribute to strategic HR discussions, join webinars/panels"
+        ];
+      case "Executive HR Leadership & Consulting":
+        return [
+          "Week 1: Study advanced topics (organizational development, mergers & acquisitions, global HR compliance)",
+          "Week 2: Observe board meetings/lead executive-level strategy sessions",
+          "Week 3: Design and lead company-wide HR transformations (culture, digital, merger integration)",
+          "Week 4: Consult with external stakeholders, coach senior peers, and publish thought leadership"
+        ];
+      default:
+        return [
+          "Week 1: Deepen knowledge in one HR specialization (C&B, L&D, ER, workforce analytics)",
+          "Week 2: Participate in or lead a small HR project (training, employee engagement, policy writing)",
+          "Week 3: Analyze a real HR case (dispute, performance, succession); discuss solutions with peers/mentors",
+          "Week 4: Present learnings to team or mentor; apply software tools to new area (e.g., make an LMS course)"
+        ];
+    }
+  };
+
   // Build next steps based on experience, then tailor first step to the predicted next role if available
   const y = input.yearsExperience
   const baseRole = input.currentRole || bestTrack.name
@@ -326,21 +381,66 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   const nextSteps: RoadmapStep[] = []
   if (y < 3) {
     nextSteps.push(
-      { timeframe: "0–6 months", title: `Strengthen ${bestTrack.name} foundations`, reason: `Solidify fundamentals and ship 2–3 portfolio examples in ${bestTrack.name}.` },
-      { timeframe: "6–18 months", title: `Progress to Senior ${baseRole.includes(bestTrack.name) ? baseRole : bestTrack.name}` , reason: "Own end-to-end initiatives and mentor juniors." },
-      { timeframe: "18–36 months", title: `${bestTrack.id === 'hrbp' ? 'HRBP' : 'Lead'} role readiness`, reason: "Demonstrate measurable business impact; lead cross-functional projects." },
+      { 
+        timeframe: "Year 1", 
+        title: `Strengthen ${bestTrack.name} foundations`, 
+        reason: `Solidify fundamentals and ship 2–3 portfolio examples in ${bestTrack.name}.`,
+        skillsImpacted: ["Core HR competencies", "Process efficiency", "Stakeholder communication"]
+      },
+      { 
+        timeframe: "Year 2", 
+        title: `Progress to Senior ${baseRole.includes(bestTrack.name) ? baseRole : bestTrack.name}`, 
+        reason: "Own end-to-end initiatives and mentor juniors.",
+        skillsImpacted: ["Technical expertise", "Leadership skills", "Project management"]
+      },
+      { 
+        timeframe: "Year 3", 
+        title: `${bestTrack.id === 'hrbp' ? 'HRBP' : 'Lead'} role readiness`, 
+        reason: "Demonstrate measurable business impact; lead cross-functional projects.",
+        skillsImpacted: ["Strategic thinking", "Business acumen", "Change leadership"]
+      },
     )
   } else if (y < 7) {
     nextSteps.push(
-      { timeframe: "0–6 months", title: `Own a core pillar in ${bestTrack.name}`, reason: "Define KPIs and deliver a playbook for repeatability." },
-      { timeframe: "6–18 months", title: `${bestTrack.name} Lead / Manager`, reason: "Lead small team or programs across regions/business units." },
-      { timeframe: "18–36 months", title: `Head of ${bestTrack.name} (scope expansion)`, reason: "Expand remit, budget, and stakeholder complexity." },
+      { 
+        timeframe: "Year 1", 
+        title: `Own a core pillar in ${bestTrack.name}`, 
+        reason: "Define KPIs and deliver a playbook for repeatability.",
+        skillsImpacted: ["Subject matter expertise", "Process optimization", "Analytics"]
+      },
+      { 
+        timeframe: "Year 2", 
+        title: `${bestTrack.name} Lead / Manager`, 
+        reason: "Lead small team or programs across regions/business units.",
+        skillsImpacted: ["People management", "Cross-functional collaboration", "Strategic planning"]
+      },
+      { 
+        timeframe: "Year 3", 
+        title: `Head of ${bestTrack.name} (scope expansion)`, 
+        reason: "Expand remit, budget, and stakeholder complexity.",
+        skillsImpacted: ["Executive presence", "Budget management", "Organizational design"]
+      },
     )
   } else {
     nextSteps.push(
-      { timeframe: "0–6 months", title: `Sharpen strategic narrative in ${bestTrack.name}`, reason: "Create a 12–18 month strategy with ROI model." },
-      { timeframe: "6–18 months", title: `Head/Director of ${bestTrack.name}`, reason: "Define operating model and governance; scale team." },
-      { timeframe: "18–36 months", title: `VP People – ${bestTrack.name} focus`, reason: "Own multi-pillar strategy aligned to business outcomes." },
+      { 
+        timeframe: "Year 1", 
+        title: `Sharpen strategic narrative in ${bestTrack.name}`, 
+        reason: "Create a 12–18 month strategy with ROI model.",
+        skillsImpacted: ["Strategic vision", "Financial acumen", "Executive communication"]
+      },
+      { 
+        timeframe: "Year 2", 
+        title: `Head/Director of ${bestTrack.name}`, 
+        reason: "Define operating model and governance; scale team.",
+        skillsImpacted: ["Organizational transformation", "Governance design", "Talent management"]
+      },
+      { 
+        timeframe: "Year 3", 
+        title: `VP People – ${bestTrack.name} focus`, 
+        reason: "Own multi-pillar strategy aligned to business outcomes.",
+        skillsImpacted: ["Business partnership", "Cultural transformation", "Board-level influence"]
+      },
     )
   }
 
@@ -349,8 +449,12 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
       timeframe: nextSteps[0].timeframe,
       title: `Target next role: ${nextLikelyRole}`,
       reason: "Based on your role, experience, and selected skills/responsibilities.",
+      skillsImpacted: nextSteps[0].skillsImpacted
     }
   }
+
+  const planType = getPlanForRole(input.currentRole);
+  const actionItems = getActionItemsForPlan(planType);
 
   const certifications = CERTS_BY_TRACK[bestTrack.id]
   const resources = RESOURCES_BY_TRACK[bestTrack.id]
@@ -360,12 +464,6 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
     ? `${summaryBase} Likely next role: ${nextLikelyRole}. The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
     : `${summaryBase} The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
 
-  const actionItems = [
-    `Create a one-page growth plan with 3 OKRs tied to ${bestTrack.name} outcomes`,
-    `Ship one measurable win in the next 60 days (define baseline & target)`,
-    `Block 2×60min weekly deep-work sessions for upskilling (${bestTrack.name})`,
-    `Schedule monthly mentor sync in ${bestTrack.name}`,
-  ]
 
   return {
     track: bestTrack.name,
