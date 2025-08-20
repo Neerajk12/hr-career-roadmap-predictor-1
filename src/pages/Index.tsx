@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet-async";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -348,6 +350,56 @@ const Index = () => {
 
 function RoadmapView({ result }: { result: Roadmap }) {
   const [showFullPlan, setShowFullPlan] = useState(false);
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(16);
+    doc.setFont(undefined, 'bold');
+    doc.text('12 Month Learning Plan', 20, 20);
+    
+    // Add subtitle with next role
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'normal');
+    const nextRole = result.nextSteps.length > 0 ? result.nextSteps[0].title : 'Career Development';
+    doc.text(`Role: ${nextRole}`, 20, 30);
+    
+    // Prepare table data
+    const tableData = result.monthlyPlan.map((month, index) => [
+      month.month.toString(),
+      month.learning,
+      month.practicing,
+      month.implementing
+    ]);
+    
+    // Add table
+    (doc as any).autoTable({
+      head: [['Month', 'Learning', 'Practicing', 'Implementing & Checking Results']],
+      body: tableData,
+      startY: 40,
+      styles: {
+        fontSize: 8,
+        cellPadding: 3,
+      },
+      headStyles: {
+        fillColor: [59, 130, 246],
+        textColor: 255,
+        fontStyle: 'bold'
+      },
+      columnStyles: {
+        0: { cellWidth: 15 },
+        1: { cellWidth: 55 },
+        2: { cellWidth: 55 },
+        3: { cellWidth: 55 }
+      },
+      margin: { left: 20, right: 20 },
+      pageBreak: 'auto'
+    });
+    
+    // Save the PDF
+    doc.save('12-month-learning-plan.pdf');
+  };
   
   return (
     <div className="space-y-4">
@@ -439,9 +491,9 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </div>
           
           <div className="mt-6 text-center space-y-3">
-            <h4 className="text-lg font-medium text-foreground">download full 12 month plan here</h4>
-            <Button onClick={() => window.print()} className="rounded-full px-6">
-              Print
+            <h4 className="text-lg font-medium text-foreground">12 Month Learning Plan</h4>
+            <Button onClick={downloadPDF} className="rounded-full px-6">
+              Download PDF
             </Button>
           </div>
         </CardContent>
