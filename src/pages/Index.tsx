@@ -3,15 +3,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet-async";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-
-// Extend jsPDF type to include autoTable
-declare module 'jspdf' {
-  interface jsPDF {
-    autoTable: (options: any) => jsPDF;
-  }
-}
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -356,150 +347,6 @@ const Index = () => {
 };
 
 function RoadmapView({ result }: { result: Roadmap }) {
-  const [showFullPlan, setShowFullPlan] = useState(false);
-
-  // Career trajectory image mapping
-  const getCareerTrajectoryImage = (nextRole: string): { imageUrl: string; imageName: string } => {
-    const role = nextRole.toLowerCase();
-    
-    if (role.includes('hr assistant') || role.includes('hr executive') || role.includes('entry')) {
-      return { 
-        imageUrl: '/lovable-uploads/b458f8ec-492a-435c-b2be-86d23d6cd521.png',
-        imageName: 'HR Assistant / HR Executive Career Plan'
-      };
-    }
-    if (role.includes('recruitment coordinator') || role.includes('coordinator')) {
-      return { 
-        imageUrl: '/lovable-uploads/ac458a43-5cd2-4571-8c51-d84b73ae8a02.png',
-        imageName: 'Recruitment Coordinator Career Plan'
-      };
-    }
-    if (role.includes('talent acquisition executive') || role.includes('talent acquisition')) {
-      return { 
-        imageUrl: '/lovable-uploads/7d09169b-f9c5-4e73-baad-3a3f4f8dfc60.png',
-        imageName: 'Talent Acquisition Executive Career Plan'
-      };
-    }
-    if (role.includes('hr generalist') || role.includes('hr operations') || role.includes('generalist')) {
-      return { 
-        imageUrl: '/lovable-uploads/87f2d2ee-e0db-42b3-affd-ea9ef7399d7e.png',
-        imageName: 'HR Generalist / HR Operations Specialist Career Plan'
-      };
-    }
-    if (role.includes('recruiter') || role.includes('recruitment manager')) {
-      return { 
-        imageUrl: '/lovable-uploads/ca3a1db3-3767-4aa6-bd49-6ff822db469a.png',
-        imageName: 'Recruiter / Recruitment Manager Career Plan'
-      };
-    }
-    if (role.includes('learning') || role.includes('development') || role.includes('l&d')) {
-      return { 
-        imageUrl: '/lovable-uploads/7811d796-5579-4e46-809e-210578ffb8f1.png',
-        imageName: 'Learning & Development Specialist Career Plan'
-      };
-    }
-    if (role.includes('employee relations') || role.includes('labor relations') || role.includes('er specialist')) {
-      return { 
-        imageUrl: '/lovable-uploads/f8406a02-1fc3-4f7f-8512-d610f04e7717.png',
-        imageName: 'Employee / Labor Relations Specialist Career Plan'
-      };
-    }
-    if (role.includes('hr manager') || role.includes('hr director') || role.includes('manager')) {
-      return { 
-        imageUrl: '/lovable-uploads/d6762ac7-9ada-46db-a903-b754310dc0e9.png',
-        imageName: 'HR Manager / HR Director Career Plan'
-      };
-    }
-    if (role.includes('business partner') || role.includes('hrbp')) {
-      return { 
-        imageUrl: '/lovable-uploads/e71f5746-d7c4-47de-b2b9-03affd457fa5.png',
-        imageName: 'HR Business Partner (HRBP) Career Plan'
-      };
-    }
-    if (role.includes('chro') || role.includes('vp') || role.includes('chief') || role.includes('director')) {
-      return { 
-        imageUrl: '/lovable-uploads/510e5747-e5ae-4eef-81af-579d13dcb761.png',
-        imageName: 'CHRO / VP of HR / Director of HR Career Plan'
-      };
-    }
-    
-    // Default to HR Assistant if no match
-    return { 
-      imageUrl: '/lovable-uploads/b458f8ec-492a-435c-b2be-86d23d6cd521.png',
-      imageName: 'HR Assistant / HR Executive Career Plan'
-    };
-  };
-
-  const downloadCareerTrajectoryImage = () => {
-    const nextRole = result.nextSteps.length > 0 ? result.nextSteps[0].title : 'Career Development';
-    const { imageUrl, imageName } = getCareerTrajectoryImage(nextRole);
-    
-    // Create a temporary link to download the image
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.download = `${imageName.replace(/\s+/g, '-').toLowerCase()}.png`;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    
-    // Add title
-    doc.setFontSize(16);
-    doc.setFont(undefined, 'bold');
-    doc.text('12 Month Learning Plan', 20, 20);
-    
-    // Add subtitle with next role
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'normal');
-    const nextRole = result.nextSteps.length > 0 ? result.nextSteps[0].title : 'Career Development';
-    doc.text(`Next Career Role: ${nextRole}`, 20, 30);
-    
-    // Add career trajectory reference
-    const { imageName } = getCareerTrajectoryImage(nextRole);
-    doc.setFontSize(10);
-    doc.text(`Career Trajectory Reference: ${imageName}`, 20, 38);
-    doc.text('(Download the career trajectory image separately for detailed monthly breakdown)', 20, 45);
-    
-    // Prepare table data
-    const tableData = result.monthlyPlan.map((month, index) => [
-      month.month.toString(),
-      month.learning,
-      month.practicing,
-      month.implementing
-    ]);
-    
-    // Add table
-    (doc as any).autoTable({
-      head: [['Month', 'Learning', 'Practicing', 'Implementing & Checking Results']],
-      body: tableData,
-      startY: 52,
-      styles: {
-        fontSize: 8,
-        cellPadding: 3,
-      },
-      headStyles: {
-        fillColor: [59, 130, 246],
-        textColor: 255,
-        fontStyle: 'bold'
-      },
-      columnStyles: {
-        0: { cellWidth: 15 },
-        1: { cellWidth: 55 },
-        2: { cellWidth: 55 },
-        3: { cellWidth: 55 }
-      },
-      margin: { left: 20, right: 20 },
-      pageBreak: 'auto'
-    });
-    
-    // Save the PDF
-    doc.save('12-month-learning-plan.pdf');
-  };
-  
   return (
     <div className="space-y-4">
       <Card className="glass-card">
@@ -517,7 +364,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
 
       <Card className="glass-card">
         <CardHeader>
-          <CardTitle>3 years plan</CardTitle>
+          <CardTitle>Career Development Plan</CardTitle>
         </CardHeader>
         <CardContent>
           <ol className="space-y-3">
@@ -559,11 +406,11 @@ function RoadmapView({ result }: { result: Roadmap }) {
       <Card className="glass-card">
         <CardHeader>
           <CardTitle className="text-xl font-semibold text-primary">Annual Achievable Learning Plan</CardTitle>
-          <p className="text-sm text-muted-foreground">First 3 months of your detailed task list based on your next role progression</p>
+          <p className="text-sm text-muted-foreground">12-month detailed task list based on your next role progression</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {result.monthlyPlan.slice(0, 3).map((month, index) => (
+            {result.monthlyPlan.map((month, index) => (
               <div key={index} className="border rounded-lg p-4 space-y-3">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">
@@ -588,23 +435,11 @@ function RoadmapView({ result }: { result: Roadmap }) {
               </div>
             ))}
           </div>
-          
-          <div className="mt-6 text-center space-y-3">
-            <h4 className="text-lg font-medium text-foreground">12 Month Learning Plan</h4>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button onClick={downloadPDF} className="rounded-full px-6">
-                Download PDF
-              </Button>
-              <Button onClick={downloadCareerTrajectoryImage} variant="outline" className="rounded-full px-6">
-                Download Career Trajectory Image
-              </Button>
-            </div>
-          </div>
         </CardContent>
       </Card>
 
-      <div className="flex flex-col gap-4 items-start">
-        <Card className="glass-card w-full max-w-sm">
+      <div className="grid md:grid-cols-2 gap-4">
+        <Card className="glass-card">
           <CardHeader>
             <CardTitle>Top skills to develop</CardTitle>
           </CardHeader>
@@ -617,7 +452,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
 
-        <Card className="glass-card w-full max-w-sm">
+        <Card className="glass-card">
           <CardHeader>
             <CardTitle>Certifications</CardTitle>
           </CardHeader>
@@ -630,6 +465,23 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Resources</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-5 space-y-1">
+            {result.resources.map((r, i) => (
+              <li key={i}>
+                <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open resource ${r.title}`}>
+                  {r.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 }
