@@ -438,21 +438,21 @@ function RoadmapView({ result }: { result: Roadmap }) {
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        <Card className="glass-card">
-          <CardHeader>
-            <CardTitle>Top skills to develop</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="list-disc pl-5 space-y-1">
-              {result.skillsToDevelop.map((s, i) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle>Top skills to develop</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc pl-5 space-y-1">
+            {result.skillsToDevelop.map((s, i) => (
+              <li key={i}>{s}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
 
-        <Card className="glass-card">
+      <div className="flex justify-end">
+        <Card className="glass-card w-full md:w-1/2">
           <CardHeader>
             <CardTitle>Certifications</CardTitle>
           </CardHeader>
@@ -465,23 +465,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle>Resources</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="list-disc pl-5 space-y-1">
-            {result.resources.map((r, i) => (
-              <li key={i}>
-                <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open resource ${r.title}`}>
-                  {r.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
     </div>
   );
 }
