@@ -445,8 +445,8 @@ function RoadmapView({ result }: { result: Roadmap }) {
         </CardContent>
       </Card>
 
-      <div className="flex flex-col md:flex-row gap-4 justify-start">
-        <Card className="glass-card flex-1 max-w-md">
+      <div className="flex flex-col gap-4 items-start">
+        <Card className="glass-card w-full max-w-sm">
           <CardHeader>
             <CardTitle>Top skills to develop</CardTitle>
           </CardHeader>
@@ -459,7 +459,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
 
-        <Card className="glass-card flex-1 max-w-md">
+        <Card className="glass-card w-full max-w-sm">
           <CardHeader>
             <CardTitle>Certifications</CardTitle>
           </CardHeader>
