@@ -437,7 +437,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </div>
           
           <div className="mt-6 text-center space-y-3">
-            <h4 className="text-lg font-medium text-foreground">Download your learning plan here</h4>
+            <h4 className="text-lg font-medium text-foreground">download full 12 month plan here</h4>
             <Button onClick={() => window.print()} className="rounded-full px-6">
               Print
             </Button>
