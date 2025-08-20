@@ -406,11 +406,11 @@ function RoadmapView({ result }: { result: Roadmap }) {
       <Card className="glass-card">
         <CardHeader>
           <CardTitle className="text-xl font-semibold text-primary">Annual Achievable Learning Plan</CardTitle>
-          <p className="text-sm text-muted-foreground">12-month detailed task list based on your next role progression</p>
+          <p className="text-sm text-muted-foreground">First 3 months of your detailed task list based on your next role progression</p>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {result.monthlyPlan.map((month, index) => (
+            {result.monthlyPlan.slice(0, 3).map((month, index) => (
               <div key={index} className="border rounded-lg p-4 space-y-3">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">
@@ -434,6 +434,13 @@ function RoadmapView({ result }: { result: Roadmap }) {
                 </div>
               </div>
             ))}
+          </div>
+          
+          <div className="mt-6 text-center space-y-3">
+            <h4 className="text-lg font-medium text-foreground">Download your learning plan here</h4>
+            <Button onClick={() => window.print()} className="rounded-full px-6">
+              Print
+            </Button>
           </div>
         </CardContent>
       </Card>
