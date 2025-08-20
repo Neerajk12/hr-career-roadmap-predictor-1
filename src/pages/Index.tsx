@@ -347,6 +347,8 @@ const Index = () => {
 };
 
 function RoadmapView({ result }: { result: Roadmap }) {
+  const [showFullPlan, setShowFullPlan] = useState(false);
+  
   return (
     <div className="space-y-4">
       <Card className="glass-card">
