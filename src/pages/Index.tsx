@@ -445,8 +445,8 @@ function RoadmapView({ result }: { result: Roadmap }) {
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        <Card className="glass-card">
+      <div className="flex flex-col md:flex-row gap-4 justify-start">
+        <Card className="glass-card flex-1 max-w-md">
           <CardHeader>
             <CardTitle>Top skills to develop</CardTitle>
           </CardHeader>
@@ -459,7 +459,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
 
-        <Card className="glass-card">
+        <Card className="glass-card flex-1 max-w-md">
           <CardHeader>
             <CardTitle>Certifications</CardTitle>
           </CardHeader>
@@ -472,23 +472,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle>Resources</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="list-disc pl-5 space-y-1">
-            {result.resources.map((r, i) => (
-              <li key={i}>
-                <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open resource ${r.title}`}>
-                  {r.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
     </div>
   );
 }
