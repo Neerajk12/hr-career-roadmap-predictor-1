@@ -347,16 +347,6 @@ const Index = () => {
 };
 
 function RoadmapView({ result }: { result: Roadmap }) {
-  const downloadJSON = () => {
-    const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `hr-roadmap-${result.track.replace(/\s+/g, '-').toLowerCase()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="space-y-4">
       <Card className="glass-card">
@@ -413,6 +403,41 @@ function RoadmapView({ result }: { result: Roadmap }) {
         </CardContent>
       </Card>
 
+      <Card className="glass-card">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold text-primary">Annual Achievable Learning Plan</CardTitle>
+          <p className="text-sm text-muted-foreground">12-month detailed task list based on your next role progression</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {result.monthlyPlan.map((month, index) => (
+              <div key={index} className="border rounded-lg p-4 space-y-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">
+                    {month.month}
+                  </div>
+                  <h4 className="font-semibold text-foreground">Month {month.month}</h4>
+                </div>
+                <div className="grid md:grid-cols-3 gap-3 text-sm">
+                  <div className="space-y-2">
+                    <div className="font-medium text-blue-600">Learning</div>
+                    <div className="text-muted-foreground">{month.learning}</div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="font-medium text-green-600">Practicing</div>
+                    <div className="text-muted-foreground">{month.practicing}</div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="font-medium text-purple-600">Implementing & Checking Results</div>
+                    <div className="text-muted-foreground">{month.implementing}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid md:grid-cols-2 gap-4">
         <Card className="glass-card">
           <CardHeader>
@@ -455,21 +480,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
               </li>
             ))}
           </ul>
-        </CardContent>
-      </Card>
-
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle>Monthly Action Plan</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {result.actionItems.map((item, i) => (
-              <div key={i} className="rounded-md border p-3">
-                <div className="font-medium text-sm">{item}</div>
-              </div>
-            ))}
-          </div>
         </CardContent>
       </Card>
     </div>
