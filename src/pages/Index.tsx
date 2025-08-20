@@ -358,6 +358,92 @@ const Index = () => {
 function RoadmapView({ result }: { result: Roadmap }) {
   const [showFullPlan, setShowFullPlan] = useState(false);
 
+  // Career trajectory image mapping
+  const getCareerTrajectoryImage = (nextRole: string): { imageUrl: string; imageName: string } => {
+    const role = nextRole.toLowerCase();
+    
+    if (role.includes('hr assistant') || role.includes('hr executive') || role.includes('entry')) {
+      return { 
+        imageUrl: '/lovable-uploads/b458f8ec-492a-435c-b2be-86d23d6cd521.png',
+        imageName: 'HR Assistant / HR Executive Career Plan'
+      };
+    }
+    if (role.includes('recruitment coordinator') || role.includes('coordinator')) {
+      return { 
+        imageUrl: '/lovable-uploads/ac458a43-5cd2-4571-8c51-d84b73ae8a02.png',
+        imageName: 'Recruitment Coordinator Career Plan'
+      };
+    }
+    if (role.includes('talent acquisition executive') || role.includes('talent acquisition')) {
+      return { 
+        imageUrl: '/lovable-uploads/7d09169b-f9c5-4e73-baad-3a3f4f8dfc60.png',
+        imageName: 'Talent Acquisition Executive Career Plan'
+      };
+    }
+    if (role.includes('hr generalist') || role.includes('hr operations') || role.includes('generalist')) {
+      return { 
+        imageUrl: '/lovable-uploads/87f2d2ee-e0db-42b3-affd-ea9ef7399d7e.png',
+        imageName: 'HR Generalist / HR Operations Specialist Career Plan'
+      };
+    }
+    if (role.includes('recruiter') || role.includes('recruitment manager')) {
+      return { 
+        imageUrl: '/lovable-uploads/ca3a1db3-3767-4aa6-bd49-6ff822db469a.png',
+        imageName: 'Recruiter / Recruitment Manager Career Plan'
+      };
+    }
+    if (role.includes('learning') || role.includes('development') || role.includes('l&d')) {
+      return { 
+        imageUrl: '/lovable-uploads/7811d796-5579-4e46-809e-210578ffb8f1.png',
+        imageName: 'Learning & Development Specialist Career Plan'
+      };
+    }
+    if (role.includes('employee relations') || role.includes('labor relations') || role.includes('er specialist')) {
+      return { 
+        imageUrl: '/lovable-uploads/f8406a02-1fc3-4f7f-8512-d610f04e7717.png',
+        imageName: 'Employee / Labor Relations Specialist Career Plan'
+      };
+    }
+    if (role.includes('hr manager') || role.includes('hr director') || role.includes('manager')) {
+      return { 
+        imageUrl: '/lovable-uploads/d6762ac7-9ada-46db-a903-b754310dc0e9.png',
+        imageName: 'HR Manager / HR Director Career Plan'
+      };
+    }
+    if (role.includes('business partner') || role.includes('hrbp')) {
+      return { 
+        imageUrl: '/lovable-uploads/e71f5746-d7c4-47de-b2b9-03affd457fa5.png',
+        imageName: 'HR Business Partner (HRBP) Career Plan'
+      };
+    }
+    if (role.includes('chro') || role.includes('vp') || role.includes('chief') || role.includes('director')) {
+      return { 
+        imageUrl: '/lovable-uploads/510e5747-e5ae-4eef-81af-579d13dcb761.png',
+        imageName: 'CHRO / VP of HR / Director of HR Career Plan'
+      };
+    }
+    
+    // Default to HR Assistant if no match
+    return { 
+      imageUrl: '/lovable-uploads/b458f8ec-492a-435c-b2be-86d23d6cd521.png',
+      imageName: 'HR Assistant / HR Executive Career Plan'
+    };
+  };
+
+  const downloadCareerTrajectoryImage = () => {
+    const nextRole = result.nextSteps.length > 0 ? result.nextSteps[0].title : 'Career Development';
+    const { imageUrl, imageName } = getCareerTrajectoryImage(nextRole);
+    
+    // Create a temporary link to download the image
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.download = `${imageName.replace(/\s+/g, '-').toLowerCase()}.png`;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const downloadPDF = () => {
     const doc = new jsPDF();
     
@@ -370,7 +456,13 @@ function RoadmapView({ result }: { result: Roadmap }) {
     doc.setFontSize(12);
     doc.setFont(undefined, 'normal');
     const nextRole = result.nextSteps.length > 0 ? result.nextSteps[0].title : 'Career Development';
-    doc.text(`Role: ${nextRole}`, 20, 30);
+    doc.text(`Next Career Role: ${nextRole}`, 20, 30);
+    
+    // Add career trajectory reference
+    const { imageName } = getCareerTrajectoryImage(nextRole);
+    doc.setFontSize(10);
+    doc.text(`Career Trajectory Reference: ${imageName}`, 20, 38);
+    doc.text('(Download the career trajectory image separately for detailed monthly breakdown)', 20, 45);
     
     // Prepare table data
     const tableData = result.monthlyPlan.map((month, index) => [
@@ -384,7 +476,7 @@ function RoadmapView({ result }: { result: Roadmap }) {
     (doc as any).autoTable({
       head: [['Month', 'Learning', 'Practicing', 'Implementing & Checking Results']],
       body: tableData,
-      startY: 40,
+      startY: 52,
       styles: {
         fontSize: 8,
         cellPadding: 3,
@@ -499,9 +591,14 @@ function RoadmapView({ result }: { result: Roadmap }) {
           
           <div className="mt-6 text-center space-y-3">
             <h4 className="text-lg font-medium text-foreground">12 Month Learning Plan</h4>
-            <Button onClick={downloadPDF} className="rounded-full px-6">
-              Download PDF
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button onClick={downloadPDF} className="rounded-full px-6">
+                Download PDF
+              </Button>
+              <Button onClick={downloadCareerTrajectoryImage} variant="outline" className="rounded-full px-6">
+                Download Career Trajectory Image
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
