@@ -532,19 +532,19 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   if (y < 3) {
     nextSteps.push(
       { 
-        timeframe: "Year 1", 
+        timeframe: "Stage 1", 
         title: `Strengthen ${bestTrack.name} foundations`, 
         reason: `Solidify fundamentals and ship 2–3 portfolio examples in ${bestTrack.name}.`,
         skillsImpacted: ["Core HR competencies", "Process efficiency", "Stakeholder communication"]
       },
       { 
-        timeframe: "Year 2", 
+        timeframe: "Stage 2", 
         title: `Progress to Senior ${baseRole.includes(bestTrack.name) ? baseRole : bestTrack.name}`, 
         reason: "Own end-to-end initiatives and mentor juniors.",
         skillsImpacted: ["Technical expertise", "Leadership skills", "Project management"]
       },
       { 
-        timeframe: "Year 3", 
+        timeframe: "Stage 3", 
         title: `${bestTrack.id === 'hrbp' ? 'HRBP' : 'Lead'} role readiness`, 
         reason: "Demonstrate measurable business impact; lead cross-functional projects.",
         skillsImpacted: ["Strategic thinking", "Business acumen", "Change leadership"]
@@ -553,19 +553,19 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   } else if (y < 7) {
     nextSteps.push(
       { 
-        timeframe: "Year 1", 
+        timeframe: "Stage 1", 
         title: `Own a core pillar in ${bestTrack.name}`, 
         reason: "Define KPIs and deliver a playbook for repeatability.",
         skillsImpacted: ["Subject matter expertise", "Process optimization", "Analytics"]
       },
       { 
-        timeframe: "Year 2", 
+        timeframe: "Stage 2", 
         title: `${bestTrack.name} Lead / Manager`, 
         reason: "Lead small team or programs across regions/business units.",
         skillsImpacted: ["People management", "Cross-functional collaboration", "Strategic planning"]
       },
       { 
-        timeframe: "Year 3", 
+        timeframe: "Stage 3", 
         title: `Head of ${bestTrack.name} (scope expansion)`, 
         reason: "Expand remit, budget, and stakeholder complexity.",
         skillsImpacted: ["Executive presence", "Budget management", "Organizational design"]
@@ -574,19 +574,19 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   } else {
     nextSteps.push(
       { 
-        timeframe: "Year 1", 
+        timeframe: "Stage 1", 
         title: `Sharpen strategic narrative in ${bestTrack.name}`, 
         reason: "Create a 12–18 month strategy with ROI model.",
         skillsImpacted: ["Strategic vision", "Financial acumen", "Executive communication"]
       },
       { 
-        timeframe: "Year 2", 
+        timeframe: "Stage 2", 
         title: `Head/Director of ${bestTrack.name}`, 
         reason: "Define operating model and governance; scale team.",
         skillsImpacted: ["Organizational transformation", "Governance design", "Talent management"]
       },
       { 
-        timeframe: "Year 3", 
+        timeframe: "Stage 3", 
         title: `VP People – ${bestTrack.name} focus`, 
         reason: "Own multi-pillar strategy aligned to business outcomes.",
         skillsImpacted: ["Business partnership", "Cultural transformation", "Board-level influence"]
