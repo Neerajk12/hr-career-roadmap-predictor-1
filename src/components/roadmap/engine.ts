@@ -351,6 +351,23 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
   const getMonthlyLearningPlan = (currentRole: string): { month: number; learning: string; practicing: string; implementing: string }[] => {
     const role = currentRole.toLowerCase();
     
+    if (role.includes("hr coordinator") || role.includes("hr co-ordinator")) {
+      return [
+        { month: 1, learning: "Understand core HR functions and HR admin duties", practicing: "Assist with employee data management and document filing", implementing: "Ensure accurate and organized employee records" },
+        { month: 2, learning: "Study recruitment basics and interview coordination", practicing: "Support scheduling interviews and candidate communication", implementing: "Track scheduling accuracy and candidate feedback" },
+        { month: 3, learning: "Learn onboarding processes and documentation", practicing: "Help onboard new hires and prepare orientation materials", implementing: "Collect and report new hire feedback" },
+        { month: 4, learning: "Study HR policies and compliance requirements", practicing: "Review and organize policy documents", implementing: "Update records and ensure compliance alignment" },
+        { month: 5, learning: "Take basic HRIS training", practicing: "Enter and maintain employee data in HRIS", implementing: "Audit HRIS entries for accuracy and report issues" },
+        { month: 6, learning: "Understand payroll process basics", practicing: "Support payroll data collection and validation", implementing: "Report payroll discrepancies to HR coordinator" },
+        { month: 7, learning: "Develop communication and interpersonal skills", practicing: "Handle employee queries and assist with HR communication", implementing: "Improve employee satisfaction through clear communication" },
+        { month: 8, learning: "Participate in HR meetings and team discussions", practicing: "Share insights or assist in note-taking during meetings", implementing: "Enhance team collaboration and follow-up execution" },
+        { month: 9, learning: "Learn basic Excel and data tracking skills", practicing: "Maintain recruitment and onboarding trackers", implementing: "Ensure data integrity and generate status reports" },
+        { month: 10, learning: "Study candidate sourcing methods and tools", practicing: "Assist in sourcing and maintaining candidate database", implementing: "Improve candidate pipeline quality and data accuracy" },
+        { month: 11, learning: "Join HR forums and online communities", practicing: "Engage in discussions and share HR best practices", implementing: "Apply learned ideas to streamline HR admin tasks" },
+        { month: 12, learning: "Review yearly performance and set new goals", practicing: "Request feedback from supervisors and peers", implementing: "Draft a transition plan for role upgrade to HR Coordinator" }
+      ];
+    }
+
     if (role.includes("hr assistant") || role.includes("hr executive")) {
       return [
         { month: 1, learning: "Study HR basics (recruitment payroll)", practicing: "Assist interview scheduling & documentation", implementing: "Track new processes learned" },
