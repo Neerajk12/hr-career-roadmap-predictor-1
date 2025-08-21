@@ -340,6 +340,14 @@ const Index = () => {
               )}
             </div>
           </div>
+
+          {/* Full-width sections */}
+          {result && (
+            <div className="mt-12 space-y-8">
+              <KekaCoursesSection result={result} />
+              <AnnualLearningPlanSection result={result} />
+            </div>
+          )}
         </div>
       </section>
     </main>
@@ -384,62 +392,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
 
       <Card className="glass-card">
         <CardHeader>
-          <CardTitle>Keka Academy Courses</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {result.kekaCourses && result.kekaCourses.length > 0 ? (
-            <ul className="list-disc pl-5 space-y-1">
-              {result.kekaCourses.map((r, i) => (
-                <li key={i}>
-                  <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open Keka Academy course ${r.title}`}>
-                    {r.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">No specific Keka Academy courses found for this track.</p>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold text-primary">Annual Achievable Learning Plan</CardTitle>
-          <p className="text-sm text-muted-foreground">12-month detailed task list based on your next role progression</p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {result.monthlyPlan.map((month, index) => (
-              <div key={index} className="border rounded-lg p-4 space-y-3">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">
-                    {month.month}
-                  </div>
-                  <h4 className="font-semibold text-foreground">Month {month.month}</h4>
-                </div>
-                <div className="grid md:grid-cols-3 gap-3 text-sm">
-                  <div className="space-y-2">
-                    <div className="font-medium text-blue-600">Learning</div>
-                    <div className="text-muted-foreground">{month.learning}</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="font-medium text-green-600">Practicing</div>
-                    <div className="text-muted-foreground">{month.practicing}</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="font-medium text-purple-600">Implementing & Checking Results</div>
-                    <div className="text-muted-foreground">{month.implementing}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="glass-card">
-        <CardHeader>
           <CardTitle>Top skills to develop</CardTitle>
         </CardHeader>
         <CardContent>
@@ -465,6 +417,75 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </CardContent>
         </Card>
       </div>
+    </div>
+  );
+}
+
+// Full-width section components
+function KekaCoursesSection({ result }: { result: Roadmap }) {
+  return (
+    <div className="flex justify-center">
+      <Card className="glass-card w-full max-w-4xl">
+        <CardHeader className="text-center">
+          <CardTitle>Keka Academy Courses</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {result.kekaCourses && result.kekaCourses.length > 0 ? (
+            <ul className="list-disc pl-5 space-y-1">
+              {result.kekaCourses.map((r, i) => (
+                <li key={i}>
+                  <a href={r.url} className="underline" target="_blank" rel="noreferrer" aria-label={`Open Keka Academy course ${r.title}`}>
+                    {r.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-muted-foreground text-center">No specific Keka Academy courses found for this track.</p>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function AnnualLearningPlanSection({ result }: { result: Roadmap }) {
+  return (
+    <div className="flex justify-center">
+      <Card className="glass-card w-full max-w-6xl">
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl font-semibold text-primary">Annual Achievable Learning Plan</CardTitle>
+          <p className="text-sm text-muted-foreground">12-month detailed task list based on your next role progression</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {result.monthlyPlan.map((month, index) => (
+              <div key={index} className="border rounded-lg p-4 space-y-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-semibold">
+                    {month.month}
+                  </div>
+                  <h4 className="font-semibold text-foreground">Month {month.month}</h4>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="space-y-2">
+                    <div className="font-medium text-blue-600">Learning</div>
+                    <div className="text-muted-foreground">{month.learning}</div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="font-medium text-green-600">Practicing</div>
+                    <div className="text-muted-foreground">{month.practicing}</div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="font-medium text-purple-600">Implementing & Checking Results</div>
+                    <div className="text-muted-foreground">{month.implementing}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
