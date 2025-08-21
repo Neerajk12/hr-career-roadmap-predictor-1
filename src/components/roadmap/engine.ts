@@ -172,6 +172,20 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
     trackId: "hrbp",
   },
   {
+    rolePatterns: ["hr admin", "hr administrator"],
+    keySkills: ["hr operations", "data management", "communication", "payroll", "documentation", "hris", "organization", "time management"],
+    responsibilities: [
+      "maintain employee records",
+      "assist recruitment process", 
+      "coordinate interviews",
+      "support onboarding and orientation process"
+    ],
+    minExp: 0,
+    maxExp: 2,
+    nextRole: "HR Coordinator",
+    trackId: "ops",
+  },
+  {
     rolePatterns: ["hr assistant", "hr executive"],
     keySkills: ["recruitment", "hr operations", "payroll"],
     responsibilities: [
