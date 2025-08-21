@@ -66,9 +66,6 @@ const ROLE_OPTIONS = [
   "HR Business Partner (HRBP)",
   "HR Manager",
   "Senior Recruiter/Talent Acquisition Manager",
-  "Director of Human Resources/HR Director",
-  "Vice President, Human Resources (VP HR)",
-  "Chief Human Resources Officer (CHRO)/Chief People Officer",
   "HR Consultant",
 ] as const;
 
