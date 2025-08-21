@@ -354,20 +354,20 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
       ];
     }
     
-    if (role.includes("recruitment coordinator")) {
+    if (role.includes("recruitment coordinator") || role.includes("hr co-ordinator") || role.includes("hr coordinator")) {
       return [
-        { month: 1, learning: "Take course on talent sourcing", practicing: "Source resumes for 2 open roles", implementing: "Log and update tracker weekly" },
-        { month: 2, learning: "Study JD writing", practicing: "Write/review at least 2 job descriptions", implementing: "Track quality of applications" },
-        { month: 3, learning: "Learn phone screening techniques", practicing: "Conduct 3 candidate screenings", implementing: "Create screening script, compare outcomes" },
-        { month: 4, learning: "Shadow recruiter on interviews", practicing: "Schedule and coordinate 5+ interviews", implementing: "Minimize scheduling errors" },
-        { month: 5, learning: "Read blog candidate experience", practicing: "Collect post-interview candidate feedback", implementing: "Report insights to team" },
-        { month: 6, learning: "Begin LinkedIn/recruitment networking", practicing: "Refer 2 candidates via referrals", implementing: "Share response rate" },
-        { month: 7, learning: "Take compliance & documentation mini-course", practicing: "Prepare hiring docs for new joiners", implementing: "Audit docs for errors" },
-        { month: 8, learning: "Learn ATS tracking features", practicing: "Tag 10 new candidates, rate them", implementing: "Share updates with supervisor" },
-        { month: 9, learning: "Study metrics for recruitment process", practicing: "Maintain recruitment dashboard", implementing: "Present summary mid-month" },
-        { month: 10, learning: "Plan & run a small hiring campaign", practicing: "Measure campaign success", implementing: "Analyze gaps, write improvement plan" },
-        { month: 11, learning: "Peer review another Coordinator's work", practicing: "Give/receive process feedback", implementing: "Implement 1 process change" },
-        { month: 12, learning: "Review YTD metrics", practicing: "Compile lessons learned", implementing: "Update resume, plan path to Recruiter" }
+        { month: 1, learning: "Understand core HR functions and HR admin duties", practicing: "Assist with employee data management and document filing", implementing: "Ensure accurate and organized employee records" },
+        { month: 2, learning: "Study recruitment basics and interview coordination", practicing: "Support scheduling interviews and candidate communication", implementing: "Track scheduling accuracy and candidate feedback" },
+        { month: 3, learning: "Learn onboarding processes and documentation", practicing: "Help onboard new hires and prepare orientation materials", implementing: "Collect and report new hire feedback" },
+        { month: 4, learning: "Study HR policies and compliance requirements", practicing: "Review and organize policy documents", implementing: "Update records and ensure compliance alignment" },
+        { month: 5, learning: "Take basic HRIS training", practicing: "Enter and maintain employee data in HRIS", implementing: "Audit HRIS entries for accuracy and report issues" },
+        { month: 6, learning: "Understand payroll process basics", practicing: "Support payroll data collection and validation", implementing: "Report payroll discrepancies to HR coordinator" },
+        { month: 7, learning: "Develop communication and interpersonal skills", practicing: "Handle employee queries and assist with HR communications", implementing: "Improve employee satisfaction through clear communication" },
+        { month: 8, learning: "Participate in HR meetings and team discussions", practicing: "Share insights or assist in note-taking during meetings", implementing: "Enhance team collaboration and follow-up execution" },
+        { month: 9, learning: "Learn basic Excel and data tracking skills", practicing: "Maintain recruitment and onboarding trackers", implementing: "Ensure data integrity and generate status reports" },
+        { month: 10, learning: "Study candidate sourcing methods and tools", practicing: "Assist in sourcing and maintaining candidate database", implementing: "Improve candidate pipeline quality and data accuracy" },
+        { month: 11, learning: "Join HR forums and online communities", practicing: "Engage in discussions and share HR best practices", implementing: "Apply learned ideas to streamline HR admin tasks" },
+        { month: 12, learning: "Review yearly performance and set new goals", practicing: "Request feedback from supervisors and peers", implementing: "Draft a transition plan for role upgrade to HR Coordinator" }
       ];
     }
     
