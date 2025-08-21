@@ -345,6 +345,7 @@ const Index = () => {
           {result && (
             <div className="mt-12 space-y-8">
               <KekaCoursesSection result={result} />
+              <SkillsAndCertificationsSection result={result} />
               <AnnualLearningPlanSection result={result} />
             </div>
           )}
@@ -390,33 +391,6 @@ function RoadmapView({ result }: { result: Roadmap }) {
         </CardContent>
       </Card>
 
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle>Top skills to develop</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="list-disc pl-5 space-y-1">
-            {result.skillsToDevelop.map((s, i) => (
-              <li key={i}>{s}</li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
-      <div className="flex justify-end">
-        <Card className="glass-card w-full md:w-1/2">
-          <CardHeader>
-            <CardTitle>Certifications</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="list-disc pl-5 space-y-1">
-              {result.certifications.map((s, i) => (
-                <li key={i}>{s}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }
@@ -445,6 +419,40 @@ function KekaCoursesSection({ result }: { result: Roadmap }) {
           )}
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+function SkillsAndCertificationsSection({ result }: { result: Roadmap }) {
+  return (
+    <div className="flex justify-center">
+      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-6">
+        <Card className="glass-card">
+          <CardHeader>
+            <CardTitle>Top skills to develop</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc pl-5 space-y-1">
+              {result.skillsToDevelop.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-card">
+          <CardHeader>
+            <CardTitle>Certifications</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="list-disc pl-5 space-y-1">
+              {result.certifications.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
