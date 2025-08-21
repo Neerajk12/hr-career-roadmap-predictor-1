@@ -1058,7 +1058,7 @@ function RecommendedResourcesSection({ result }: { result: Roadmap }) {
     <div className="flex justify-center">
       <Card className="glass-card w-full max-w-6xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-xl font-semibold text-primary">Recommended Learning Resources</CardTitle>
+          <CardTitle className="text-xl font-semibold text-primary">Resource Link</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <p className="text-sm text-muted-foreground">{content.title}</p>
