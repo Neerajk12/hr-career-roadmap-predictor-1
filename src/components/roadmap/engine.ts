@@ -15,7 +15,7 @@ export type RoadmapStep = {
 }
 
 export type Roadmap = {
-  track: string
+  currentRole: string
   confidence: number
   summary: string
   nextSteps: RoadmapStep[]
@@ -1222,7 +1222,7 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
 
 
   return {
-    track: bestTrack.name,
+    currentRole: bestTrack.name,
     confidence: Math.round(confidence * 100) / 100,
     summary,
     nextSteps,

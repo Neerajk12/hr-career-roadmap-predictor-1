@@ -513,7 +513,7 @@ function KekaCoursesSection({ result }: { result: Roadmap }) {
               ))}
             </ul>
           ) : (
-            <p className="text-sm text-muted-foreground text-center">No specific Keka Academy courses found for this track.</p>
+            <p className="text-sm text-muted-foreground text-center">No specific Keka Academy courses found for this role.</p>
           )}
         </CardContent>
       </Card>
@@ -597,8 +597,8 @@ function AnnualLearningPlanSection({ result }: { result: Roadmap }) {
 }
 
 function RecommendedResourcesSection({ result }: { result: Roadmap }) {
-  const getResourcesContent = (track: string) => {
-    switch (track) {
+  const getResourcesContent = (currentRole: string) => {
+    switch (currentRole) {
       case "HR Assistant":
         return {
           title: "Here are the 5 most important recommended links (including websites and YouTube) that cover all the key topics from your learning list:",
@@ -1148,7 +1148,7 @@ function RecommendedResourcesSection({ result }: { result: Roadmap }) {
     }
   };
 
-  const content = getResourcesContent(result.track);
+  const content = getResourcesContent(result.currentRole);
 
   if (!content) {
     return null;
