@@ -454,18 +454,20 @@ const Index = () => {
 function RoadmapView({ result }: { result: Roadmap }) {
   return (
     <div className="space-y-4">
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle>Recommended Track: {result.track}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">Confidence: {(result.confidence * 100).toFixed(0)}%</p>
-          <p>{result.summary}</p>
-          <div className="flex gap-3 pt-1">
-            <Button variant="secondary" onClick={() => window.print()}>Print</Button>
-          </div>
-        </CardContent>
-      </Card>
+      {result.nextLikelyRole && (
+        <Card className="glass-card">
+          <CardHeader>
+            <CardTitle>Next Job Role: {result.nextLikelyRole}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">Confidence: {(result.confidence * 100).toFixed(0)}%</p>
+            <p>{result.summary}</p>
+            <div className="flex gap-3 pt-1">
+              <Button variant="secondary" onClick={() => window.print()}>Print</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="glass-card">
         <CardHeader>

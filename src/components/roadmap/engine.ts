@@ -24,6 +24,7 @@ export type Roadmap = {
   resources: { title: string; url: string }[]
   kekaCourses: { title: string; url: string }[]
   monthlyPlan: { month: number; learning: string; practicing: string; implementing: string }[]
+  nextLikelyRole?: string
 }
 
 const TRACKS = [
@@ -1230,5 +1231,6 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
     resources,
     kekaCourses,
     monthlyPlan,
+    nextLikelyRole,
   }
 }
