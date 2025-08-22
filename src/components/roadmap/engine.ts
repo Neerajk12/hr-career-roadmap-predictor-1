@@ -111,6 +111,224 @@ const KEKA_COURSES_BY_TRACK: Record<string, { title: string; url: string }[]> = 
   ],
 }
 
+const ROLE_SPECIFIC_DATA: Record<string, {
+  kekaCourses: { title: string; url: string }[]
+  skillsToDevelop: string[]
+  resources: { title: string; url: string }[]
+}> = {
+  "Recruitment Coordinator": {
+    kekaCourses: [
+      { title: "Core HR Certification", url: "https://academy.keka.com/courses/core-hr-certification" },
+      { title: "Keka Hire ATS Certification", url: "https://academy.keka.com/courses/keka-hire-ats-certification" }
+    ],
+    skillsToDevelop: ["Communication", "ATS use", "Recruitment coordination"],
+    resources: [
+      { title: "HR Foundations", url: "https://www.linkedin.com/learning/hr-foundations" },
+      { title: "Recruitment Foundations", url: "https://www.linkedin.com/learning/recruitment-foundations" }
+    ]
+  },
+  "Recruiter": {
+    kekaCourses: [
+      { title: "Keka Hire ATS Certification", url: "https://academy.keka.com/courses/keka-hire-ats-certification" }
+    ],
+    skillsToDevelop: ["Candidate screening", "CV writing", "Interview scheduling"],
+    resources: [
+      { title: "Recruitment Strategies", url: "https://www.linkedin.com/learning/recruitment-strategies" }
+    ]
+  },
+  "Recruiter/TA Manager": {
+    kekaCourses: [
+      { title: "HR Generalist Certification", url: "https://academy.keka.com/courses/hr-generalist-certification" }
+    ],
+    skillsToDevelop: ["Employer branding", "Negotiation", "TA metrics"],
+    resources: [
+      { title: "Advanced Interviewing Techniques", url: "https://www.linkedin.com/learning/advanced-interviewing-techniques" }
+    ]
+  },
+  "HR Manager/Employee Relations": {
+    kekaCourses: [
+      { title: "Core HR Certification", url: "https://academy.keka.com/courses/core-hr-certification" }
+    ],
+    skillsToDevelop: ["Employee relations", "Policy", "Conflict resolution"],
+    resources: [
+      { title: "HR Business Partner Foundations", url: "https://www.linkedin.com/learning/hr-business-partner-foundations" }
+    ]
+  },
+  "Senior Recruiter": {
+    kekaCourses: [
+      { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
+    ],
+    skillsToDevelop: ["Strategic sourcing", "Analytics", "Leadership"],
+    resources: [
+      { title: "Recruitment Analytics and Reporting", url: "https://www.linkedin.com/learning/recruitment-analytics-and-reporting" }
+    ]
+  },
+  "TA Manager": {
+    kekaCourses: [
+      { title: "Keka Hire ATS Sol-in-HR", url: "https://academy.keka.com/courses/sol-in-hr" }
+    ],
+    skillsToDevelop: ["Sourcing teams", "Influencing", "Analytics"],
+    resources: [
+      { title: "Talent Sourcing Techniques", url: "https://www.linkedin.com/learning/talent-sourcing-techniques" }
+    ]
+  },
+  "Head TA/HRBP": {
+    kekaCourses: [
+      { title: "HR Generalist Certification", url: "https://academy.keka.com/courses/hr-generalist-certification" }
+    ],
+    skillsToDevelop: ["Leadership", "Strategy", "Analytics"],
+    resources: [
+      { title: "Strategic Talent Acquisition", url: "https://www.linkedin.com/learning/strategic-talent-acquisition" }
+    ]
+  },
+  "Payroll Manager": {
+    kekaCourses: [
+      { title: "Crafting Pay in India Master Payroll", url: "https://academy.keka.com/courses/crafting-pay-in-india-master-payroll" }
+    ],
+    skillsToDevelop: ["Payroll tech", "Accuracy", "Tax knowledge"],
+    resources: [
+      { title: "Payroll Fundamentals", url: "https://www.linkedin.com/learning/payroll-fundamentals" }
+    ]
+  },
+  "HR Manager": {
+    kekaCourses: [
+      { title: "Core HR Certification", url: "https://academy.keka.com/courses/core-hr-certification" }
+    ],
+    skillsToDevelop: ["Leadership", "Audit", "Systems integration"],
+    resources: [
+      { title: "Advanced Payroll Management", url: "https://www.linkedin.com/learning/advanced-payroll-management" }
+    ]
+  },
+  "Compensation Manager": {
+    kekaCourses: [
+      { title: "Compensation and Benefits", url: "https://academy.keka.com/courses/compensation-and-benefits" }
+    ],
+    skillsToDevelop: ["Salary design", "Negotiation", "Data analysis"],
+    resources: [
+      { title: "Compensation and Benefits", url: "https://www.linkedin.com/learning/compensation-and-benefits" }
+    ]
+  },
+  "HR Director": {
+    kekaCourses: [
+      { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
+    ],
+    skillsToDevelop: ["Strategy", "Change management", "Leadership"],
+    resources: [
+      { title: "Strategic Compensation", url: "https://www.linkedin.com/learning/strategic-compensation" }
+    ]
+  },
+  "L&D Manager": {
+    kekaCourses: [
+      { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
+    ],
+    skillsToDevelop: ["Instructional design", "Engagement", "Soft skills"],
+    resources: [
+      { title: "Learning and Development Foundations", url: "https://www.linkedin.com/learning/learning-and-development-foundations" }
+    ]
+  },
+  "Head L&D": {
+    kekaCourses: [
+      { title: "Keka Hire ATS Sol-in-HR", url: "https://academy.keka.com/courses/sol-in-hr" }
+    ],
+    skillsToDevelop: ["Strategy", "Vendor management", "Data interpretation"],
+    resources: [
+      { title: "Learning and Development", url: "https://www.linkedin.com/learning/learning-and-development" }
+    ]
+  },
+  "Employee Relations Mgr": {
+    kekaCourses: [
+      { title: "HR Generalist Certification", url: "https://academy.keka.com/courses/hr-generalist-certification" }
+    ],
+    skillsToDevelop: ["Negotiation", "Legal knowledge", "Mediation"],
+    resources: [
+      { title: "Employee Relations", url: "https://www.linkedin.com/learning/employee-relations" }
+    ]
+  },
+  "Director/CHRO": {
+    kekaCourses: [
+      { title: "AI in HR", url: "https://academy.keka.com/courses/ai-in-hr" }
+    ],
+    skillsToDevelop: ["Strategic partnership", "Data literacy", "Digital HR"],
+    resources: [
+      { title: "HR Business Partner Foundations", url: "https://www.linkedin.com/learning/hr-business-partner-foundations" }
+    ]
+  },
+  "VP HR": {
+    kekaCourses: [
+      { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
+    ],
+    skillsToDevelop: ["Executive coaching", "Business strategy", "Risk management"],
+    resources: [
+      { title: "Executive Leadership", url: "https://www.linkedin.com/learning/executive-leadership" }
+    ]
+  },
+  "CHRO": {
+    kekaCourses: [],
+    skillsToDevelop: ["Enterprise leadership", "Transformation management"],
+    resources: [
+      { title: "Leading People Through Change", url: "https://www.linkedin.com/learning/leading-people-through-change" }
+    ]
+  },
+  "Group CHRO": {
+    kekaCourses: [],
+    skillsToDevelop: ["Leadership", "Decision-making", "Governance"],
+    resources: [
+      { title: "Strategic Human Resources Planning", url: "https://www.linkedin.com/learning/strategic-human-resources-planning" }
+    ]
+  },
+  "Senior Consultant": {
+    kekaCourses: [],
+    skillsToDevelop: ["Client management", "Business analysis", "Agile HR"],
+    resources: [
+      { title: "Business Consulting Foundations", url: "https://www.linkedin.com/learning/business-consulting-foundations" }
+    ]
+  },
+  "HRIS Manager": {
+    kekaCourses: [
+      { title: "Fundamentals of People Analytics", url: "https://academy.keka.com/courses/fundamentals-of-people-analytics" }
+    ],
+    skillsToDevelop: ["System Configuration", "Data Visualization"],
+    resources: [
+      { title: "HR Technology", url: "https://www.linkedin.com/learning/hr-technology" }
+    ]
+  },
+  "Talent Management Manager": {
+    kekaCourses: [],
+    skillsToDevelop: ["Project Management", "Leadership"],
+    resources: [
+      { title: "Project Management Foundations", url: "https://www.linkedin.com/learning/project-management-foundations" }
+    ]
+  },
+  "Head of Org Development": {
+    kekaCourses: [],
+    skillsToDevelop: ["Strategic HR", "Communication"],
+    resources: [
+      { title: "Organizational Change Management", url: "https://www.linkedin.com/learning/organizational-change-management" }
+    ]
+  },
+  "D&I Manager": {
+    kekaCourses: [],
+    skillsToDevelop: ["Advocacy", "Program Management"],
+    resources: [
+      { title: "Diversity and Inclusion in the Workplace", url: "https://www.linkedin.com/learning/diversity-and-inclusion-in-the-workplace" }
+    ]
+  },
+  "Recruitment Manager": {
+    kekaCourses: [],
+    skillsToDevelop: ["Reporting", "Data Interpretation"],
+    resources: [
+      { title: "Hiring Analytics and Reporting", url: "https://www.linkedin.com/learning/hiring-analytics-and-reporting" }
+    ]
+  },
+  "Talent Acquisition Manager": {
+    kekaCourses: [],
+    skillsToDevelop: ["Strategic Sourcing", "Communication"],
+    resources: [
+      { title: "Strategic Talent Acquisition", url: "https://www.linkedin.com/learning/strategic-talent-acquisition" }
+    ]
+  }
+}
+
 type RoleCombo = {
   rolePatterns: string[]
   keySkills: string[]
@@ -742,9 +960,19 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
 
   const monthlyPlan = getMonthlyLearningPlan(input.currentRole);
 
-  const certifications = CERTS_BY_TRACK[bestTrack.id]
-  const resources = RESOURCES_BY_TRACK[bestTrack.id]
-  const kekaCourses = KEKA_COURSES_BY_TRACK[bestTrack.id] ?? []
+  let certifications = CERTS_BY_TRACK[bestTrack.id]
+  let resources = RESOURCES_BY_TRACK[bestTrack.id]
+  let kekaCourses = KEKA_COURSES_BY_TRACK[bestTrack.id] ?? []
+  let skillsToDevelop = gaps.slice(0, 5)
+
+  // Check if we have specific data for the predicted next role
+  if (nextLikelyRole && ROLE_SPECIFIC_DATA[nextLikelyRole]) {
+    const roleData = ROLE_SPECIFIC_DATA[nextLikelyRole]
+    kekaCourses = roleData.kekaCourses
+    skillsToDevelop = roleData.skillsToDevelop
+    resources = roleData.resources
+  }
+
   const summaryBase = `${input.fullName.split(" ")[0]}, based on your ${y} years in ${input.currentRole || 'HR'}, your strongest trajectory is ${bestTrack.name}.`
   const summary = nextLikelyRole
     ? `${summaryBase} Likely next role: ${nextLikelyRole}. The plan below focuses on clear next roles, skill gaps, and high-ROI learning.`
@@ -756,7 +984,7 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
     confidence: Math.round(confidence * 100) / 100,
     summary,
     nextSteps,
-    skillsToDevelop: gaps.slice(0, 5),
+    skillsToDevelop,
     certifications,
     resources,
     kekaCourses,
