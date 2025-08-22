@@ -958,7 +958,10 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
     }
   }
 
-  const monthlyPlan = getMonthlyLearningPlan(input.currentRole);
+  // Use specific 12-month plan for the recommended next role if available, otherwise use current role plan
+  const monthlyPlan = nextLikelyRole 
+    ? getMonthlyLearningPlan(nextLikelyRole) || getMonthlyLearningPlan(input.currentRole)
+    : getMonthlyLearningPlan(input.currentRole);
 
   let certifications = CERTS_BY_TRACK[bestTrack.id]
   let resources = RESOURCES_BY_TRACK[bestTrack.id]
