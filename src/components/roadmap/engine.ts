@@ -845,20 +845,139 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
       ];
     }
     
-    if (role.includes("chro") || role.includes("vp hr") || role.includes("director")) {
+    if (role.includes("hr director")) {
       return [
-        { month: 1, learning: "Lead executive leadership strategy", practicing: "Host annual HR vision and goal setting", implementing: "Communicate vision to all HR teams" },
-        { month: 2, learning: "Attend global HR conferences", practicing: "Align HR with business-wide strategic plan", implementing: "Get CEO and board feedback" },
-        { month: 3, learning: "Study global compliance & integrations", practicing: "Oversee global HR policy integrations", implementing: "Report status to board" },
-        { month: 4, learning: "Mentor senior leaders & executives", practicing: "Lead diversity & inclusion global initiatives", implementing: "Analyze participation and impact" },
-        { month: 5, learning: "Research emerging workforce trends", practicing: "Oversee digital transformation in HR", implementing: "Track digital adoption" },
-        { month: 6, learning: "Host quarterly HR leadership forums", practicing: "Drive culture change programs", implementing: "Conduct culture surveys" },
-        { month: 7, learning: "Pilot innovative employee engagement", practicing: "Manage budget and resource allocation", implementing: "Report financial & engagement outcomes" },
-        { month: 8, learning: "Lead talent acquisition strategy", practicing: "Approve senior hires and succession planning", implementing: "Evaluate pipeline depth" },
-        { month: 9, learning: "Guide organizational development", practicing: "Approve leadership development programs", implementing: "Monitor ROI and success metrics" },
-        { month: 10, learning: "Participate in industry leadership committees", practicing: "Lead quarterly HR business reviews", implementing: "Use insights for strategy" },
-        { month: 11, learning: "Self-reflect and peer review", practicing: "Present quarterly HRBP business impact report", implementing: "Plan next steps for career growth" },
-        { month: 12, learning: "Review annual HR outcomes plan next year", practicing: "Complete personal leadership review", implementing: "Set advisory or consultant goals" }
+        { month: 1, learning: "Study organizational strategy", practicing: "Analyze current HR strategic plans", implementing: "Identify gaps for improvement" },
+        { month: 2, learning: "Change management frameworks", practicing: "Lead small change projects", implementing: "Present change impact reports" },
+        { month: 3, learning: "Executive leadership skills", practicing: "Coach HR managers", implementing: "Improve leadership feedback scores" },
+        { month: 4, learning: "Workforce planning strategy", practicing: "Develop multi-year talent plans", implementing: "Align HR planning with business goals" },
+        { month: 5, learning: "Talent management frameworks", practicing: "Oversee leadership development", implementing: "Measure leadership readiness" },
+        { month: 6, learning: "HR analytics advanced concepts", practicing: "Use workforce data for decision-making", implementing: "Present predictive insights to C-suite" },
+        { month: 7, learning: "Diversity and inclusion strategy", practicing: "Lead DEI strategic initiatives", implementing: "Track organization-wide DEI metrics" },
+        { month: 8, learning: "Communication and Engagement", practicing: "Design employee engagement initiatives", implementing: "Improve engagement scores" },
+        { month: 9, learning: "HR governance and compliance", practicing: "Review HR policies for compliance", implementing: "Update and implement policies" },
+        { month: 10, learning: "Executive decision-making", practicing: "Facilitate executive HR sessions", implementing: "Improve decision timeliness and efficiency" },
+        { month: 11, learning: "Coaching and mentoring senior leaders", practicing: "Conduct executive coaching", implementing: "Record progress of coached leaders" },
+        { month: 12, learning: "Strategic plan presentation", practicing: "Compile annual HR business review", implementing: "Set goals with C-suite approval" }
+      ];
+    }
+    
+    if (role.includes("l&d manager")) {
+      return [
+        { month: 1, learning: "Study instructional design basics", practicing: "Design sample training modules", implementing: "Present modules for peer review" },
+        { month: 2, learning: "Adult learning theory", practicing: "Develop interactive learning activities", implementing: "Pilot training session" },
+        { month: 3, learning: "Employee engagement techniques", practicing: "Conduct surveys", implementing: "Analyze and report engagement results" },
+        { month: 4, learning: "Communication and presentation skills", practicing: "Run workshops", implementing: "Increase participant satisfaction" },
+        { month: 5, learning: "Technology for e-learning", practicing: "Use LMS software", implementing: "Launch digital training" },
+        { month: 6, learning: "Training needs analysis", practicing: "Conduct department assessments", implementing: "Create tailored learning plans" },
+        { month: 7, learning: "Coaching & feedback methods", practicing: "Provide coaching sessions", implementing: "Measure participant progress" },
+        { month: 8, learning: "Content creation best practices", practicing: "Write engaging content", implementing: "Publish course materials" },
+        { month: 9, learning: "Soft skills development", practicing: "Facilitate soft skills workshops", implementing: "Track skill adoption" },
+        { month: 10, learning: "Evaluation of training impact", practicing: "Develop training ROI metrics", implementing: "Present impact metrics to leadership" },
+        { month: 11, learning: "Vendor management", practicing: "Manage external training vendors", implementing: "Ensure vendor adherence to quality standards" },
+        { month: 12, learning: "Annual L&D review and planning", practicing: "Report annual L&D outcomes", implementing: "Set improvement goals and growth path" }
+      ];
+    }
+    
+    if (role.includes("head l&d")) {
+      return [
+        { month: 1, learning: "Study L&D strategic frameworks", practicing: "Review current strategy", implementing: "Identify areas for strategic enhancement" },
+        { month: 2, learning: "Data analytics for measuring learning impact", practicing: "Analyze training metrics", implementing: "Present actionable insights" },
+        { month: 3, learning: "Advanced vendor management", practicing: "Review vendor contracts", implementing: "Negotiate improvements or renewals" },
+        { month: 4, learning: "Change management in L&D", practicing: "Lead rollout of new initiatives", implementing: "Measure adoption and feedback" },
+        { month: 5, learning: "Leadership and influence", practicing: "Coach L&D managers", implementing: "Track leadership progress" },
+        { month: 6, learning: "Budgeting and resource allocation", practicing: "Plan annual L&D budget", implementing: "Align spend with business priorities" },
+        { month: 7, learning: "Digital learning trends", practicing: "Pilot new learning technologies", implementing: "Evaluate user engagement and satisfaction" },
+        { month: 8, learning: "Learning culture development", practicing: "Drive employee engagement campaigns", implementing: "Increase participation rates" },
+        { month: 9, learning: "Collaboration with business leaders", practicing: "Facilitate cross-functional workshops", implementing: "Improve stakeholder buy-in" },
+        { month: 10, learning: "Talent development", practicing: "Design leadership development plans", implementing: "Track talent pipeline improvements" },
+        { month: 11, learning: "HR data literacy", practicing: "Train team on interpreting data", implementing: "Enhance team decision-making" },
+        { month: 12, learning: "Strategic L&D report & roadmap", practicing: "Present year-end strategy", implementing: "Gain leadership approval for next phase" }
+      ];
+    }
+    
+    if (role.includes("employee relations manager")) {
+      return [
+        { month: 1, learning: "Study advanced labor laws", practicing: "Review current employee relations cases", implementing: "Develop case strategies" },
+        { month: 2, learning: "Mediation and conflict resolution", practicing: "Facilitate mock mediation sessions", implementing: "Incident resolution success rate" },
+        { month: 3, learning: "Crisis management frameworks", practicing: "Lead crisis scenario simulations", implementing: "Improve crisis response preparedness" },
+        { month: 4, learning: "Communication in sensitive situations", practicing: "Conduct sensitive employee communications", implementing: "Increase employee trust and transparency" },
+        { month: 5, learning: "Employee engagement strategies", practicing: "Implement engagement interventions", implementing: "Increase morale scores" },
+        { month: 6, learning: "Data analytics for employee relations", practicing: "Analyze turnover and dispute data", implementing: "Identify key risk factors" },
+        { month: 7, learning: "Policy review and correction", practicing: "Audit ER policies", implementing: "Implement necessary updates" },
+        { month: 8, learning: "Leadership skills", practicing: "Coach ER team", implementing: "Raise team effectiveness scores" },
+        { month: 9, learning: "Change management", practicing: "Lead change in policy enforcement", implementing: "Achieve smoother transitions" },
+        { month: 10, learning: "Diversity & inclusion impact", practicing: "Lead D&I initiatives", implementing: "Improve workplace inclusivity" },
+        { month: 11, learning: "Stakeholder management", practicing: "Engage leadership and unions", implementing: "strengthen labor relations" },
+        { month: 12, learning: "Annual ER effectiveness review", practicing: "Lead comprehensive ER review", implementing: "Plan next steps for continuous improvement" }
+      ];
+    }
+    
+    if (role.includes("director") && role.includes("chro")) {
+      return [
+        { month: 1, learning: "Study enterprise HR strategy", practicing: "Review organizational HR strategy", implementing: "Identify strategic gaps" },
+        { month: 2, learning: "Data literacy & analytics", practicing: "Analyze workforce and business data", implementing: "Present strategic insights" },
+        { month: 3, learning: "Digital HR tools & transformation", practicing: "Evaluate digital HR initiatives", implementing: "Recommend technology upgrades" },
+        { month: 4, learning: "Executive leadership", practicing: "Lead senior leadership meetings", implementing: "Influence organizational decision-making" },
+        { month: 5, learning: "Change management", practicing: "Sponsor HR transformation projects", implementing: "Measure adoption and impact" },
+        { month: 6, learning: "Talent management strategy", practicing: "Build succession plans", implementing: "Strengthen leadership pipelines" },
+        { month: 7, learning: "Diversity & inclusion strategy", practicing: "Develop enterprise-wide DEI programs", implementing: "Track inclusion metrics" },
+        { month: 8, learning: "Stakeholder engagement", practicing: "Manage C-suite relationships", implementing: "Improve strategic partnerships" },
+        { month: 9, learning: "Governance & compliance", practicing: "Ensure HR policies meet regulatory standards", implementing: "Implement risk mitigation" },
+        { month: 10, learning: "Business partnership", practicing: "Collaborate cross-functionally", implementing: "Align HR with business goals" },
+        { month: 11, learning: "Mergers & acquisitions HR", practicing: "Lead HR due diligence & integration", implementing: "Ensure smooth workforce transitions" },
+        { month: 12, learning: "Annual strategy review", practicing: "Present CHRO report to board", implementing: "Set vision and goals for next fiscal year" }
+      ];
+    }
+    
+    if (role.includes("vp hr")) {
+      return [
+        { month: 1, learning: "Executive coaching certification", practicing: "Coach HR leaders", implementing: "Collect feedback from coachees" },
+        { month: 2, learning: "Business strategy fundamentals", practicing: "Contribute to executive strategy", implementing: "Present HRs role in business strategy" },
+        { month: 3, learning: "Risk identification and mitigation", practicing: "Lead HR risk assessment", implementing: "Create HR risk mitigation plans" },
+        { month: 4, learning: "Leadership influence", practicing: "Develop executive presence", implementing: "Improve stakeholder relationships" },
+        { month: 5, learning: "Change leadership", practicing: "Sponsor large-scale organizational change", implementing: "Monitor outcomes and adjust as needed" },
+        { month: 6, learning: "Talent development", practicing: "Design leadership development programs", implementing: "Track leadership bench strength" },
+        { month: 7, learning: "Diversity and inclusion", practicing: "Lead enterprise-wide D&I initiatives", implementing: "Improve cultural inclusivity" },
+        { month: 8, learning: "Workforce analytics", practicing: "Provide data-driven workforce insights", implementing: "Influence leadership decision-making" },
+        { month: 9, learning: "HR governance", practicing: "Review and improve HR policy compliance", implementing: "Reduce governance risks" },
+        { month: 10, learning: "Executive communications", practicing: "Lead corporate-wide HR communications", implementing: "Improve message clarity and engagement" },
+        { month: 11, learning: "Succession planning", practicing: "Finalize succession plans", implementing: "Ensure readiness of key roles" },
+        { month: 12, learning: "Annual strategic review", practicing: "Present HR achievements to board", implementing: "Set priorities for next fiscal year" }
+      ];
+    }
+    
+    if (role.includes("chro") && !role.includes("group")) {
+      return [
+        { month: 1, learning: "Enterprise leadership skills", practicing: "Lead executive team HR strategy", implementing: "Align enterprise HR vision" },
+        { month: 2, learning: "Transformation management frameworks", practicing: "Oversee HR transformation program", implementing: "Achieve project milestones" },
+        { month: 3, learning: "Corporate governance", practicing: "Develop governance policies", implementing: "Improve compliance and transparency" },
+        { month: 4, learning: "Culture and change leadership", practicing: "Drive cultural transformation", implementing: "Increase employee engagement" },
+        { month: 5, learning: "Talent strategy", practicing: "Lead enterprise talent review", implementing: "Strengthen talent pipelines" },
+        { month: 6, learning: "Risk and compliance management", practicing: "Manage HR regulatory risks", implementing: "Implement risk controls" },
+        { month: 7, learning: "Digital HR strategy", practicing: "Oversee HR technology upgrades", implementing: "Meet digital transformation goals" },
+        { month: 8, learning: "Executive coaching & development", practicing: "Mentor senior executives", implementing: "Measure leadership effectiveness" },
+        { month: 9, learning: "Workforce analytics", practicing: "Present high-level analytics", implementing: "Inform strategic decisions" },
+        { month: 10, learning: "Stakeholder partnership", practicing: "Build relationships with board and leadership", implementing: "Enhance HR influence" },
+        { month: 11, learning: "Succession management", practicing: "Ensure leadership readiness", implementing: "Maintain talent continuity" },
+        { month: 12, learning: "Year-end strategy review", practicing: "Deliver enterprise HR report", implementing: "Set vision for upcoming year" }
+      ];
+    }
+    
+    if (role.includes("group chro")) {
+      return [
+        { month: 1, learning: "Advanced leadership development", practicing: "Facilitate executive retreats", implementing: "Improve leadership cohesion" },
+        { month: 2, learning: "Corporate governance", practicing: "Oversee group-wide compliance", implementing: "Align regional HR policies" },
+        { month: 3, learning: "Decision-making frameworks", practicing: "Lead HR strategic decisions", implementing: "Increase decision speed and effectiveness" },
+        { month: 4, learning: "Workforce planning at scale", practicing: "Coordinate multi-business unit planning", implementing: "Achieve cross-unit talent alignment" },
+        { month: 5, learning: "Change leadership", practicing: "Manage complex organizational change", implementing: "Ensure change adoption across units" },
+        { month: 6, learning: "Enterprise risk management", practicing: "Oversee enterprise HR risk", implementing: "Implement mitigation strategies" },
+        { month: 7, learning: "Diversity, equity & inclusion", practicing: "Lead global D&I strategy", implementing: "Drive measurable inclusion targets" },
+        { month: 8, learning: "HR analytics for groups", practicing: "Aggregate HR data across divisions", implementing: "Present group-wide HR metrics" },
+        { month: 9, learning: "Corporate culture", practicing: "Foster unified culture", implementing: "Measure cultural integration" },
+        { month: 10, learning: "Executive coaching", practicing: "Coach group leadership teams", implementing: "Track leadership development" },
+        { month: 11, learning: "Stakeholder engagement", practicing: "Partner with regional leaders", implementing: "Enhance trust and collaboration" },
+        { month: 12, learning: "Strategic planning", practicing: "Develop next three-year HR strategy", implementing: "Gain consensus across group" }
       ];
     }
     
