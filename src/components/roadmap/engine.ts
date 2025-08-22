@@ -981,6 +981,125 @@ export function buildRoadmap(input: RoadmapInput): Roadmap {
       ];
     }
     
+    if (role.includes("senior consultant")) {
+      return [
+        { month: 1, learning: "Study client management fundamentals", practicing: "Support client meetings", implementing: "Improve client satisfaction" },
+        { month: 2, learning: "Learn business analysis techniques", practicing: "Analyze HR business processes", implementing: "Deliver analysis reports" },
+        { month: 3, learning: "Understand Agile HR principles", practicing: "Participate in Agile HR projects", implementing: "Apply Agile in project tasks" },
+        { month: 4, learning: "Develop consulting skills", practicing: "Draft proposals for clients", implementing: "Gain peer review and improve" },
+        { month: 5, learning: "Communication and negotiation", practicing: "Lead client workshops", implementing: "Receive positive feedback from clients" },
+        { month: 6, learning: "Advanced business process mapping", practicing: "Map client HR processes", implementing: "Identify optimization opportunities" },
+        { month: 7, learning: "Change management frameworks", practicing: "Support change initiatives", implementing: "Measure change impact" },
+        { month: 8, learning: "Data analysis and visualization", practicing: "Build client HR dashboards", implementing: "Present actionable insights" },
+        { month: 9, learning: "Coaching and facilitation", practicing: "Facilitate client training sessions", implementing: "Achieve high participant satisfaction" },
+        { month: 10, learning: "Stakeholder engagement", practicing: "Manage multiple client relationships", implementing: "Strengthen client partnerships" },
+        { month: 11, learning: "Industry HR trends", practicing: "Share insights in consulting forums", implementing: "Enhance consulting relevance" },
+        { month: 12, learning: "Review annual client feedback", practicing: "Develop consulting improvement plan", implementing: "Increase repeat business" }
+      ];
+    }
+
+    if (role.includes("hris manager")) {
+      return [
+        { month: 1, learning: "Study HRIS system architecture", practicing: "Explore current HRIS configurations", implementing: "Document system configurations" },
+        { month: 2, learning: "Data visualization basics", practicing: "Create HR reports using visualization tools", implementing: "Improve report clarity and usability" },
+        { month: 3, learning: "Master system configuration", practicing: "Test and modify system workflows", implementing: "Implement process improvements" },
+        { month: 4, learning: "Learn data security and privacy", practicing: "Audit HRIS data access controls", implementing: "Address security gaps" },
+        { month: 5, learning: "Analyze user feedback", practicing: "Collect and prioritize system enhancement requests", implementing: "Improve user satisfaction" },
+        { month: 6, learning: "Reporting automation", practicing: "Develop automated report solutions", implementing: "Reduce report turnaround time" },
+        { month: 7, learning: "Integration with other HR systems", practicing: "Coordinate integration projects", implementing: "Achieve seamless data flow during upgrades" },
+        { month: 8, learning: "System upgrade planning", practicing: "Plan system upgrades", implementing: "Minimize disruption during upgrades" },
+        { month: 9, learning: "Compliance in HR data", practicing: "Ensure system meets data regulations", implementing: "Achieve zero compliance issues" },
+        { month: 10, learning: "User training", practicing: "Document training materials", implementing: "Train HR users effectively" },
+        { month: 11, learning: "Project management", practicing: "Lead HRIS projects", implementing: "Deliver projects on time" },
+        { month: 12, learning: "Review HRIS strategy", practicing: "Present system performance and upgrade plan", implementing: "Align HRIS strategy with organizational goals" }
+      ];
+    }
+
+    if (role.includes("talent management manager")) {
+      return [
+        { month: 1, learning: "Study talent management strategy", practicing: "Review current programs", implementing: "Identify improvement areas" },
+        { month: 2, learning: "Leadership coaching fundamentals", practicing: "Coach high-potential employees", implementing: "Document coaching outcomes" },
+        { month: 3, learning: "Workforce planning and talent review", practicing: "Conduct skills gap analysis", implementing: "Develop talent development plans" },
+        { month: 4, learning: "Succession planning", practicing: "Create succession plans for key roles", implementing: "Strengthen leadership bench" },
+        { month: 5, learning: "Performance management", practicing: "Oversee appraisal processes", implementing: "Increase performance review completion rate" },
+        { month: 6, learning: "Employee engagement", practicing: "Launch talent engagement initiatives", implementing: "Measure engagement improvements" },
+        { month: 7, learning: "Learning and development strategy", practicing: "Align learning with talent needs", implementing: "Improve program participation" },
+        { month: 8, learning: "Change management", practicing: "Support organizational development efforts", implementing: "Facilitate smoother talent transitions" },
+        { month: 9, learning: "Data-driven talent decisions", practicing: "Use analytics for talent insights", implementing: "Present talent dashboards" },
+        { month: 10, learning: "Coaching advanced techniques", practicing: "Group coaching sessions", implementing: "Improve leadership capabilities" },
+        { month: 11, learning: "Diversity and inclusion in talent", practicing: "Promote inclusive talent initiatives", implementing: "Improve diversity metrics" },
+        { month: 12, learning: "Year-end talent review", practicing: "Present talent management report", implementing: "Set next year's talent strategy" }
+      ];
+    }
+
+    if (role.includes("head of org development") || role.includes("organizational development")) {
+      return [
+        { month: 1, learning: "Study organizational development strategy", practicing: "Analyze organizational effectiveness", implementing: "Identify focus areas" },
+        { month: 2, learning: "Develop communication skills", practicing: "Facilitate stakeholder meetings", implementing: "Improve message clarity" },
+        { month: 3, learning: "Change diagnostics", practicing: "Conduct change readiness assessments", implementing: "Report findings" },
+        { month: 4, learning: "Leadership development", practicing: "Design leadership programs", implementing: "Increase participation" },
+        { month: 5, learning: "Culture assessment", practicing: "Lead cultural surveys", implementing: "Develop culture change plans" },
+        { month: 6, learning: "Coaching and mentoring", practicing: "Coach leaders on organizational development", implementing: "Track leader growth" },
+        { month: 7, learning: "Performance management systems", practicing: "Optimize performance evaluation processes", implementing: "Enhance feedback culture" },
+        { month: 8, learning: "Talent mobility", practicing: "Develop job rotation programs", implementing: "Support skill diversification" },
+        { month: 9, learning: "Data interpretation", practicing: "Analyze OD program data", implementing: "Present impact reports" },
+        { month: 10, learning: "Stakeholder engagement", practicing: "Manage cross-functional collaboration", implementing: "Improve organizational alignment" },
+        { month: 11, learning: "Facilitation skills", practicing: "Lead OD workshops", implementing: "Increase employee involvement" },
+        { month: 12, learning: "Strategy review", practicing: "Prepare annual OD strategic report", implementing: "Set direction for next year" }
+      ];
+    }
+
+    if (role.includes("d&i manager") || role.includes("diversity") || role.includes("inclusion")) {
+      return [
+        { month: 1, learning: "Study D&I frameworks and laws", practicing: "Review current D&I policies", implementing: "Identify gaps" },
+        { month: 2, learning: "Develop advocacy skills", practicing: "Lead awareness campaigns", implementing: "Increase employee participation" },
+        { month: 3, learning: "Program management basics", practicing: "Design new D&I programs", implementing: "Obtain stakeholder feedback" },
+        { month: 4, learning: "Communication for inclusion", practicing: "Facilitate inclusive communication", implementing: "Boost inclusiveness in messages" },
+        { month: 5, learning: "Data collection & analysis", practicing: "Collect diversity metrics", implementing: "Report progress" },
+        { month: 6, learning: "Leadership engagement", practicing: "Conduct trainings for leaders", implementing: "Gain leadership buy-in" },
+        { month: 7, learning: "Handling bias and microaggressions", practicing: "Conduct workshops", implementing: "Improve awareness scores" },
+        { month: 8, learning: "Inclusive recruitment", practicing: "Revise hiring practices", implementing: "Improve diverse candidate pools" },
+        { month: 9, learning: "Collaborate with ER teams", practicing: "Address employee concerns", implementing: "Reduce bias-related grievances" },
+        { month: 10, learning: "Program evaluation", practicing: "Analyze program outcomes", implementing: "Adjust initiatives" },
+        { month: 11, learning: "External partnership development", practicing: "Build relationships with NGOs", implementing: "Leverage external expertise" },
+        { month: 12, learning: "Annual D&I report", practicing: "Present D&I impact", implementing: "Plan next year" }
+      ];
+    }
+
+    if (role.includes("recruitment manager")) {
+      return [
+        { month: 1, learning: "Study recruitment KPIs", practicing: "Collect recruitment data", implementing: "Ensure data accuracy" },
+        { month: 2, learning: "Reporting tools training", practicing: "Build recruitment reports", implementing: "Present monthly reports to leadership" },
+        { month: 3, learning: "Data interpretation basics", practicing: "Analyze recruitment data", implementing: "Identify trends and issues" },
+        { month: 4, learning: "Stakeholder communication", practicing: "Share insights with hiring managers", implementing: "Improve decision-making" },
+        { month: 5, learning: "Recruitment process optimization", practicing: "Facilitate process improvements", implementing: "Reduce time-to-fill and cost-per-hire" },
+        { month: 6, learning: "Talent pipeline management", practicing: "Develop sourcing forecasts", implementing: "Improve candidate flow" },
+        { month: 7, learning: "Team leadership", practicing: "Coordinate recruitment team efforts", implementing: "Boost team performance" },
+        { month: 8, learning: "Candidate experience strategies", practicing: "Implement candidate feedback", implementing: "Increase satisfaction scores" },
+        { month: 9, learning: "ATS optimization", practicing: "Streamline ATS usage", implementing: "Improve system efficiency" },
+        { month: 10, learning: "Recruitment marketing", practicing: "Run employer branding campaigns", implementing: "Monitor campaign impact" },
+        { month: 11, learning: "Budgeting & resource allocation", practicing: "Monitor recruitment budgets", implementing: "Optimize spend" },
+        { month: 12, learning: "Annual performance review", practicing: "Summarize recruitment metrics", implementing: "Set targets for next year" }
+      ];
+    }
+
+    if (role.includes("talent acquisition manager")) {
+      return [
+        { month: 1, learning: "Develop strategic sourcing plans", practicing: "Map sourcing channels", implementing: "Identify high-yield sources" },
+        { month: 2, learning: "Enhance communication skills", practicing: "Lead recruiter communication", implementing: "Improve candidate engagement" },
+        { month: 3, learning: "Market research", practicing: "Analyze labor market trends", implementing: "Adjust sourcing strategies" },
+        { month: 4, learning: "Employer branding techniques", practicing: "Lead social recruiting campaigns", implementing: "Increase brand visibility" },
+        { month: 5, learning: "Negotiation skills", practicing: "Conduct offer negotiations", implementing: "Improve acceptance rate" },
+        { month: 6, learning: "Stakeholder management", practicing: "Collaborate with hiring managers", implementing: "Align hiring needs" },
+        { month: 7, learning: "Data-driven decision making", practicing: "Use analytics for sourcing decisions", implementing: "Present findings" },
+        { month: 8, learning: "Diversity sourcing strategies", practicing: "Expand underrepresented candidate pools", implementing: "Increase diversity hires" },
+        { month: 9, learning: "Talent pipeline development", practicing: "Build long-term sourcing plans", implementing: "Maintain candidate pools" },
+        { month: 10, learning: "Technology utilization", practicing: "Pilot sourcing automation tools", implementing: "Increase recruitment efficiency" },
+        { month: 11, learning: "Coaching and mentoring", practicing: "Mentor recruiting team members", implementing: "Track team skill improvements" },
+        { month: 12, learning: "Annual review and goal setting", practicing: "Report yearly sourcing outcomes", implementing: "Set strategic sourcing goals" }
+      ];
+    }
+    
     // Default fallback
     return [
       { month: 1, learning: "Study core HR concepts", practicing: "Apply learnings in daily work", implementing: "Track progress and improvements" },
