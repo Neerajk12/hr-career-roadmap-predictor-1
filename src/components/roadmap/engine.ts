@@ -236,6 +236,31 @@ const ROLE_SPECIFIC_DATA: Record<string, {
       { title: "Employee Relations", url: "https://www.linkedin.com/learning/employee-relations" }
     ]
   },
+  "HR Director": {
+    kekaCourses: [
+      { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
+    ],
+    skillsToDevelop: ["Strategy", "Change management", "Leadership"],
+    resources: [
+      { title: "Strategic Compensation", url: "https://www.linkedin.com/learning/strategic-compensation" }
+    ]
+  },
+  "VP HR": {
+    kekaCourses: [
+      { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
+    ],
+    skillsToDevelop: ["Executive coaching", "Business strategy", "Risk management"],
+    resources: [
+      { title: "Executive Leadership", url: "https://www.linkedin.com/learning/executive-leadership" }
+    ]
+  },
+  "CHRO": {
+    kekaCourses: [],
+    skillsToDevelop: ["Enterprise leadership", "Transformation management"],
+    resources: [
+      { title: "Leading People Through Change", url: "https://www.linkedin.com/learning/leading-people-through-change" }
+    ]
+  },
   "Director/CHRO": {
     kekaCourses: [
       { title: "AI in HR", url: "https://academy.keka.com/courses/ai-in-hr" }
