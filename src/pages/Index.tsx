@@ -423,7 +423,7 @@ const Index = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground text-sm">
-                      After you submit the form, we’ll show your predicted HR track, skill gaps, certifications, resources, and a 36-month step-by-step roadmap.
+                      After you submit the form, we’ll show your predicted HR track, skill gaps, certifications, resources, and a 12-month step-by-step roadmap.
                     </p>
                   </CardContent>
                 </Card>
