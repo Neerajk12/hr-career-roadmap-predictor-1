@@ -181,6 +181,7 @@ type FormValues = z.infer<typeof schema>;
 const Index = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [result, setResult] = useState<Roadmap | null>(null);
+  const [showExpertConnect, setShowExpertConnect] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -219,6 +220,11 @@ const Index = () => {
       responsibilities: values.responsibilities.join(", "),
     });
     setResult(roadmap);
+    
+    // Start 30-second timer to show expert connect option
+    setTimeout(() => {
+      setShowExpertConnect(true);
+    }, 30000);
   };
 
   const jsonLd = useMemo(
@@ -428,7 +434,7 @@ const Index = () => {
                   </CardContent>
                 </Card>
               ) : (
-                <RoadmapView result={result} />
+                <RoadmapView result={result} showExpertConnect={showExpertConnect} />
               )}
             </div>
           </div>
@@ -448,7 +454,7 @@ const Index = () => {
   );
 };
 
-function RoadmapView({ result }: { result: Roadmap }) {
+function RoadmapView({ result, showExpertConnect }: { result: Roadmap; showExpertConnect: boolean }) {
   return (
     <div className="space-y-4">
       {result.nextLikelyRole && (
@@ -461,6 +467,38 @@ function RoadmapView({ result }: { result: Roadmap }) {
             <p>{result.summary}</p>
             <div className="flex gap-3 pt-1">
               <Button variant="secondary" onClick={() => window.print()}>Print</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {showExpertConnect && result.nextLikelyRole && (
+        <Card className="glass-card border-primary/50 bg-gradient-to-r from-primary/5 to-accent/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <span className="text-primary">🎯</span>
+              Connect with a {result.nextLikelyRole} Expert
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm">
+              Ready to accelerate your journey to <strong>{result.nextLikelyRole}</strong>? 
+              Get personalized guidance from industry experts who've walked this path.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button 
+                variant="default" 
+                className="flex-1"
+                onClick={() => window.open(`mailto:experts@hrcareer.com?subject=Expert Consultation Request - ${result.nextLikelyRole}&body=Hi! I just completed my HR career roadmap and I'm interested in connecting with a ${result.nextLikelyRole} expert for personalized guidance.%0A%0ANext Role: ${result.nextLikelyRole}%0AConfidence: ${(result.confidence * 100).toFixed(0)}%%0A%0APlease let me know available consultation slots.`, '_blank')}
+              >
+                Schedule Expert Call
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => window.open('/main', '_blank')}
+              >
+                Browse All Experts
+              </Button>
             </div>
           </CardContent>
         </Card>
