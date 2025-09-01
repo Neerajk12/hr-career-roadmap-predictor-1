@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -449,6 +450,17 @@ const Index = () => {
 };
 
 function RoadmapView({ result }: { result: Roadmap }) {
+  const navigate = useNavigate();
+
+  const handleConnectWithExpert = () => {
+    navigate('/experts', { 
+      state: { 
+        nextRole: result.nextLikelyRole,
+        currentRole: result.currentRole 
+      } 
+    });
+  };
+
   return (
     <div className="space-y-4">
       {result.nextLikelyRole && (
@@ -485,6 +497,16 @@ function RoadmapView({ result }: { result: Roadmap }) {
           </ol>
         </CardContent>
       </Card>
+
+      <div className="flex justify-center pt-4">
+        <Button 
+          onClick={handleConnectWithExpert}
+          variant="hero" 
+          className="px-8 py-3 text-base"
+        >
+          Connect with an expert for guidance
+        </Button>
+      </div>
 
     </div>
   );
