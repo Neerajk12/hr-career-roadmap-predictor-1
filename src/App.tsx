@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import Experts from "./pages/Experts";
+import CareerBuddyPremium from "./pages/CareerBuddyPremium";
 
 import MainPage from "./pages/Main";
 
@@ -25,7 +26,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth/signup" element={<Signup />} />
             <Route path="/auth/login" element={<Login />} />
-            <Route path="/experts" element={<Experts />} />
+        <Route path="/experts" element={<Experts />} />
+        <Route path="/career-buddy-premium" element={<CareerBuddyPremium />} />
             
             <Route path="/main" element={<MainPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
