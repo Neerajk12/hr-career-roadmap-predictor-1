@@ -37,12 +37,12 @@ const TRACKS = [
 ]
 
 const CORE_BY_TRACK: Record<string, string[]> = {
-  ta: ["sourcing", "interviewing", "stakeholder mgmt", "employer branding", "candidate experience"],
-  hrbp: ["employee relations", "org design", "workforce planning", "performance mgmt", "change mgmt"],
-  cb: ["salary benchmarking", "job architecture", "pay equity", "benefits design", "reward strategy"],
-  ld: ["needs analysis", "curriculum design", "facilitation", "lms admin", "evaluation (kirkpatrick)"],
-  pa: ["excel / sheets", "sql or no-sql", "data visualization", "people metrics", "experimentation"],
-  ops: ["hris admin", "process design", "policy writing", "payroll coordination", "compliance"]
+  ta: ["Talent Acquisition & Recruitment", "Sourcing & Market Research", "Stakeholder Management & Leadership", "Engagement & Culture Building", "Project & Program Management"],
+  hrbp: ["Employee Relations & Compliance", "Organizational Development", "Performance Management", "HR Strategy & Transformation", "Change Management"],
+  cb: ["Compensation & Benefits (C&B)", "Data Analytics & Reporting", "Labor Law & Policy", "HR Technology & Systems", "Stakeholder Management & Leadership"],
+  ld: ["Learning & Development (L&D)", "Career Development", "Performance Management", "Engagement & Culture Building", "Project & Program Management"],
+  pa: ["Data Analytics & Reporting", "HR Technology & Systems", "Performance Management", "Talent Management & Succession Planning", "HR Strategy & Transformation"],
+  ops: ["HR Operations & Payroll Management", "Employee Relations & Compliance", "Labor Law & Policy", "HR Technology & Systems", "Project & Program Management"]
 }
 
 const CERTS_BY_TRACK: Record<string, string[]> = {
@@ -122,7 +122,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
       { title: "Core HR Certification", url: "https://academy.keka.com/courses/core-hr-certification" },
       { title: "Keka Hire ATS Certification", url: "https://academy.keka.com/courses/keka-hire-ats-certification" }
     ],
-    skillsToDevelop: ["Communication", "ATS use", "Recruitment coordination"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "HR Technology & Systems", "Talent Acquisition & Recruitment"],
     resources: [
       { title: "HR Foundations", url: "https://www.linkedin.com/learning/hr-foundations" },
       { title: "Recruitment Foundations", url: "https://www.linkedin.com/learning/recruitment-foundations" }
@@ -132,7 +132,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Keka Hire ATS Certification", url: "https://academy.keka.com/courses/keka-hire-ats-certification" }
     ],
-    skillsToDevelop: ["Candidate screening", "CV writing", "Interview scheduling"],
+    skillsToDevelop: ["Talent Acquisition & Recruitment", "Sourcing & Market Research", "Project & Program Management"],
     resources: [
       { title: "Recruitment Strategies", url: "https://www.linkedin.com/learning/recruitment-strategies" }
     ]
@@ -141,7 +141,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "HR Generalist Certification", url: "https://academy.keka.com/courses/hr-generalist-certification" }
     ],
-    skillsToDevelop: ["Employer branding", "Negotiation", "TA metrics"],
+    skillsToDevelop: ["Engagement & Culture Building", "Stakeholder Management & Leadership", "Data Analytics & Reporting"],
     resources: [
       { title: "Advanced Interviewing Techniques", url: "https://www.linkedin.com/learning/advanced-interviewing-techniques" }
     ]
@@ -150,7 +150,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Core HR Certification", url: "https://academy.keka.com/courses/core-hr-certification" }
     ],
-    skillsToDevelop: ["Employee relations", "Policy", "Conflict resolution"],
+    skillsToDevelop: ["Employee Relations & Compliance", "Labor Law & Policy", "Conflict Resolution & Grievance Handling"],
     resources: [
       { title: "HR Business Partner Foundations", url: "https://www.linkedin.com/learning/hr-business-partner-foundations" }
     ]
@@ -159,7 +159,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
     ],
-    skillsToDevelop: ["Strategic sourcing", "Analytics", "Leadership"],
+    skillsToDevelop: ["Sourcing & Market Research", "Data Analytics & Reporting", "Stakeholder Management & Leadership"],
     resources: [
       { title: "Recruitment Analytics and Reporting", url: "https://www.linkedin.com/learning/recruitment-analytics-and-reporting" }
     ]
@@ -168,7 +168,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Keka Hire ATS Sol-in-HR", url: "https://academy.keka.com/courses/sol-in-hr" }
     ],
-    skillsToDevelop: ["Sourcing teams", "Influencing", "Analytics"],
+    skillsToDevelop: ["Talent Management & Succession Planning", "Stakeholder Management & Leadership", "Data Analytics & Reporting"],
     resources: [
       { title: "Talent Sourcing Techniques", url: "https://www.linkedin.com/learning/talent-sourcing-techniques" }
     ]
@@ -177,7 +177,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "HR Generalist Certification", url: "https://academy.keka.com/courses/hr-generalist-certification" }
     ],
-    skillsToDevelop: ["Leadership", "Strategy", "Analytics"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "HR Strategy & Transformation", "Data Analytics & Reporting"],
     resources: [
       { title: "Strategic Talent Acquisition", url: "https://www.linkedin.com/learning/strategic-talent-acquisition" }
     ]
@@ -186,7 +186,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Crafting Pay in India Master Payroll", url: "https://academy.keka.com/courses/crafting-pay-in-india-master-payroll" }
     ],
-    skillsToDevelop: ["Payroll tech", "Accuracy", "Tax knowledge"],
+    skillsToDevelop: ["HR Operations & Payroll Management", "HR Technology & Systems", "Labor Law & Policy"],
     resources: [
       { title: "Payroll Fundamentals", url: "https://www.linkedin.com/learning/payroll-fundamentals" }
     ]
@@ -195,7 +195,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Core HR Certification", url: "https://academy.keka.com/courses/core-hr-certification" }
     ],
-    skillsToDevelop: ["Leadership", "Audit", "Systems integration"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "Employee Relations & Compliance", "HR Technology & Systems"],
     resources: [
       { title: "Advanced Payroll Management", url: "https://www.linkedin.com/learning/advanced-payroll-management" }
     ]
@@ -204,7 +204,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Compensation and Benefits", url: "https://academy.keka.com/courses/compensation-and-benefits" }
     ],
-    skillsToDevelop: ["Salary design", "Negotiation", "Data analysis"],
+    skillsToDevelop: ["Compensation & Benefits (C&B)", "Stakeholder Management & Leadership", "Data Analytics & Reporting"],
     resources: [
       { title: "Compensation and Benefits", url: "https://www.linkedin.com/learning/compensation-and-benefits" }
     ]
@@ -213,7 +213,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
     ],
-    skillsToDevelop: ["Instructional design", "Engagement", "Soft skills"],
+    skillsToDevelop: ["Learning & Development (L&D)", "Engagement & Culture Building", "Career Development"],
     resources: [
       { title: "Learning and Development Foundations", url: "https://www.linkedin.com/learning/learning-and-development-foundations" }
     ]
@@ -222,7 +222,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Keka Hire ATS Sol-in-HR", url: "https://academy.keka.com/courses/sol-in-hr" }
     ],
-    skillsToDevelop: ["Strategy", "Vendor management", "Data interpretation"],
+    skillsToDevelop: ["HR Strategy & Transformation", "Stakeholder Management & Leadership", "Data Analytics & Reporting"],
     resources: [
       { title: "Learning and Development", url: "https://www.linkedin.com/learning/learning-and-development" }
     ]
@@ -231,7 +231,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "HR Generalist Certification", url: "https://academy.keka.com/courses/hr-generalist-certification" }
     ],
-    skillsToDevelop: ["Negotiation", "Legal knowledge", "Mediation"],
+    skillsToDevelop: ["Conflict Resolution & Grievance Handling", "Labor Law & Policy", "Employee Relations & Compliance"],
     resources: [
       { title: "Employee Relations", url: "https://www.linkedin.com/learning/employee-relations" }
     ]
@@ -240,7 +240,7 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
     ],
-    skillsToDevelop: ["Strategy", "Change management", "Leadership"],
+    skillsToDevelop: ["HR Strategy & Transformation", "Change Management", "Stakeholder Management & Leadership"],
     resources: [
       { title: "Strategic Compensation", url: "https://www.linkedin.com/learning/strategic-compensation" }
     ]
@@ -249,14 +249,14 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Performance Management System", url: "https://academy.keka.com/courses/performance-management-system" }
     ],
-    skillsToDevelop: ["Executive coaching", "Business strategy", "Risk management"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "HR Strategy & Transformation", "Organizational Development"],
     resources: [
       { title: "Executive Leadership", url: "https://www.linkedin.com/learning/executive-leadership" }
     ]
   },
   "CHRO": {
     kekaCourses: [],
-    skillsToDevelop: ["Enterprise leadership", "Transformation management"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "Change Management", "HR Strategy & Transformation"],
     resources: [
       { title: "Leading People Through Change", url: "https://www.linkedin.com/learning/leading-people-through-change" }
     ]
@@ -265,21 +265,21 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "AI in HR", url: "https://academy.keka.com/courses/ai-in-hr" }
     ],
-    skillsToDevelop: ["Strategic partnership", "Data literacy", "Digital HR"],
+    skillsToDevelop: ["HR Strategy & Transformation", "Data Analytics & Reporting", "HR Technology & Systems"],
     resources: [
       { title: "HR Business Partner Foundations", url: "https://www.linkedin.com/learning/hr-business-partner-foundations" }
     ]
   },
   "Group CHRO": {
     kekaCourses: [],
-    skillsToDevelop: ["Leadership", "Decision-making", "Governance"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "HR Strategy & Transformation", "Organizational Development"],
     resources: [
       { title: "Strategic Human Resources Planning", url: "https://www.linkedin.com/learning/strategic-human-resources-planning" }
     ]
   },
   "Senior Consultant": {
     kekaCourses: [],
-    skillsToDevelop: ["Client management", "Business analysis", "Agile HR"],
+    skillsToDevelop: ["Stakeholder Management & Leadership", "Data Analytics & Reporting", "Change Management"],
     resources: [
       { title: "Business Consulting Foundations", url: "https://www.linkedin.com/learning/business-consulting-foundations" }
     ]
@@ -288,42 +288,42 @@ const ROLE_SPECIFIC_DATA: Record<string, {
     kekaCourses: [
       { title: "Fundamentals of People Analytics", url: "https://academy.keka.com/courses/fundamentals-of-people-analytics" }
     ],
-    skillsToDevelop: ["System Configuration", "Data Visualization"],
+    skillsToDevelop: ["HR Technology & Systems", "Data Analytics & Reporting"],
     resources: [
       { title: "HR Technology", url: "https://www.linkedin.com/learning/hr-technology" }
     ]
   },
   "Talent Management Manager": {
     kekaCourses: [],
-    skillsToDevelop: ["Project Management", "Leadership"],
+    skillsToDevelop: ["Project & Program Management", "Stakeholder Management & Leadership"],
     resources: [
       { title: "Project Management Foundations", url: "https://www.linkedin.com/learning/project-management-foundations" }
     ]
   },
   "Head of Org Development": {
     kekaCourses: [],
-    skillsToDevelop: ["Strategic HR", "Communication"],
+    skillsToDevelop: ["HR Strategy & Transformation", "Stakeholder Management & Leadership"],
     resources: [
       { title: "Organizational Change Management", url: "https://www.linkedin.com/learning/organizational-change-management" }
     ]
   },
   "D&I Manager": {
     kekaCourses: [],
-    skillsToDevelop: ["Advocacy", "Program Management"],
+    skillsToDevelop: ["DEI (Diversity, Equity & Inclusion)", "Project & Program Management"],
     resources: [
       { title: "Diversity and Inclusion in the Workplace", url: "https://www.linkedin.com/learning/diversity-and-inclusion-in-the-workplace" }
     ]
   },
   "Recruitment Manager": {
     kekaCourses: [],
-    skillsToDevelop: ["Reporting", "Data Interpretation"],
+    skillsToDevelop: ["Data Analytics & Reporting", "Talent Acquisition & Recruitment"],
     resources: [
       { title: "Hiring Analytics and Reporting", url: "https://www.linkedin.com/learning/hiring-analytics-and-reporting" }
     ]
   },
   "Talent Acquisition Manager": {
     kekaCourses: [],
-    skillsToDevelop: ["Strategic Sourcing", "Communication"],
+    skillsToDevelop: ["Sourcing & Market Research", "Stakeholder Management & Leadership"],
     resources: [
       { title: "Strategic Talent Acquisition", url: "https://www.linkedin.com/learning/strategic-talent-acquisition" }
     ]
@@ -344,7 +344,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   // Entry Level (0-2 years)
   {
     rolePatterns: ["hr assistant", "hr executive"],
-    keySkills: ["recruitment", "hr operations", "payroll"],
+    keySkills: ["Talent Acquisition & Recruitment", "HR Operations & Payroll Management", "Employee Relations & Compliance"],
     responsibilities: ["interview scheduling", "onboarding", "sourcing", "documentation"],
     minExp: 0,
     maxExp: 2,
@@ -353,7 +353,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["recruitment coordinator"],
-    keySkills: ["recruitment", "talent acquisition", "hr operations"],
+    keySkills: ["Talent Acquisition & Recruitment", "Sourcing & Market Research", "HR Operations & Payroll Management"],
     responsibilities: ["sourcing", "interview scheduling", "onboarding"],
     minExp: 0,
     maxExp: 2,
@@ -362,7 +362,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["talent acquisition executive"],
-    keySkills: ["recruitment", "talent acquisition", "learning dev"],
+    keySkills: ["Talent Acquisition & Recruitment", "Learning & Development (L&D)", "Career Development"],
     responsibilities: ["sourcing", "interview scheduling", "onboarding", "training coordination"],
     minExp: 0,
     maxExp: 2,
@@ -373,7 +373,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   // Mid Level (2-7 years)
   {
     rolePatterns: ["hr generalist", "operations specialist"],
-    keySkills: ["hr operations", "employee relations", "compliance"],
+    keySkills: ["HR Operations & Payroll Management", "Employee Relations & Compliance", "Labor Law & Policy"],
     responsibilities: ["onboarding", "policy administration", "training coordination", "payroll"],
     minExp: 2,
     maxExp: 7,
@@ -382,7 +382,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["recruiter", "recruitment manager"],
-    keySkills: ["recruitment", "talent acquisition", "hr operations"],
+    keySkills: ["Talent Acquisition & Recruitment", "Sourcing & Market Research", "HR Operations & Payroll Management"],
     responsibilities: ["full cycle hiring", "onboarding", "policy administration"],
     minExp: 2,
     maxExp: 7,
@@ -391,7 +391,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["senior recruiter"],
-    keySkills: ["recruitment strategy", "stakeholder management", "analytics"],
+    keySkills: ["Talent Acquisition & Recruitment", "Stakeholder Management & Leadership", "Data Analytics & Reporting"],
     responsibilities: ["leading recruitment campaigns", "employer branding"],
     minExp: 4,
     maxExp: 8,
@@ -400,7 +400,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["talent acquisition manager"],
-    keySkills: ["team leadership", "talent management", "hr strategy"],
+    keySkills: ["Stakeholder Management & Leadership", "Talent Management & Succession Planning", "HR Strategy & Transformation"],
     responsibilities: ["managing recruitment teams", "planning workforce strategy"],
     minExp: 5,
     maxExp: 10,
@@ -409,7 +409,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["payroll executive"],
-    keySkills: ["payroll processing", "compliance", "data management"],
+    keySkills: ["HR Operations & Payroll Management", "Employee Relations & Compliance", "Data Analytics & Reporting"],
     responsibilities: ["payroll calculations", "statutory reporting"],
     minExp: 1,
     maxExp: 4,
@@ -418,7 +418,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["payroll manager"],
-    keySkills: ["payroll system management", "compliance"],
+    keySkills: ["HR Operations & Payroll Management", "HR Technology & Systems", "Labor Law & Policy"],
     responsibilities: ["oversee payroll processes", "audits", "team management"],
     minExp: 5,
     maxExp: 10,
@@ -427,7 +427,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   },
   {
     rolePatterns: ["compensation", "benefits specialist"],
-    keySkills: ["c&b strategy", "salary benchmarking", "compliance"],
+    keySkills: ["Compensation & Benefits (C&B)", "Data Analytics & Reporting", "Labor Law & Policy"],
     responsibilities: ["benefits administration", "salary analysis", "employee queries"],
     minExp: 3,
     maxExp: 7,
