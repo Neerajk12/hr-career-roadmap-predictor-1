@@ -541,7 +541,7 @@ const ROLE_COMBINATIONS: RoleCombo[] = [
   // Specialist Roles
   {
     rolePatterns: ["hris analyst"],
-    keySkills: ["hr tech", "data analysis", "reporting"],
+    keySkills: ["HR Technology & Systems", "data analysis", "reporting"],
     responsibilities: ["hr system management", "reporting"],
     minExp: 1,
     maxExp: 4,
