@@ -32,7 +32,7 @@ const SKILL_OPTIONS = [
   "HR Operations",
   "Payroll",
   "Talent Acquisition",
-  "Learning Dev",
+  "Learning & Development",
   "Employee Relations",
   "Compliance",
   "Recruitment Strategy",
