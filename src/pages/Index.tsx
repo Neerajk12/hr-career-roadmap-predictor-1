@@ -28,55 +28,50 @@ import {
 import { buildRoadmap, type Roadmap } from "@/components/roadmap/engine";
 
 const SKILL_OPTIONS = [
-  "Recruitment",
+  // Entry Level & Operational Skills (0-2 years)
   "HR Operations",
+  "Recruitment", 
   "Payroll",
-  "Talent Acquisition",
-  "Learning & Development",
-  "Employee Relations",
   "Compliance",
-  "Recruitment Strategy",
-  "Stakeholder Management",
-  "Analytics",
-  "Team Leadership",
-  "Talent Management",
-  "HR Strategy",
-  "Payroll Processing",
   "Data Management",
-  "Payroll System Management",
-  "C&B Strategy",
-  "Salary Benchmarking",
-  "Compensation Design",
-  "Benefits Strategy",
+  "Policy",
+  
+  // Functional Specialist Skills (2-5 years)
+  "Talent Acquisition",
+  "Employee Relations", 
   "Learning & Development",
   "Performance Management",
+  "Compensation Design",
+  "Benefits Strategy",
+  "Career Development",
+  "Training",
   "Employee Engagement",
-  "L&D Strategy",
-  "Program Management",
-  "Labor Law",
-  "Grievance Handling",
-  "Conflict Resolution",
-  "Leadership",
-  "Organizational Development",
-  "Strategy",
-  "HR Transformation",
-  "Business Leadership",
-  "Project Management",
+  
+  // Technical & Systems Skills
   "HR Technology & Systems",
   "Data Analysis",
+  "Analytics",
   "Reporting",
-  "HR Technology & Systems",
-  "Succession Planning",
-  "Career Development",
+  
+  // Management & Strategic Skills (5-10 years)
+  "Talent Management",
+  "Stakeholder Management",
+  "Project Management",
+  "Organizational Development",
   "Change Management",
-  "Culture",
-  "Training",
+  "Conflict Resolution",
+  "Grievance Handling",
+  "Labor Law",
+  
+  // Leadership & Executive Skills (10+ years)
+  "HR Strategy",
+  "Business Leadership", 
+  "Team Leadership",
+  "HR Transformation",
+  "Succession Planning",
   "DEI Strategy",
-  "Policy",
-  "Recruitment Metrics",
-  "Data Analytics",
-  "Talent Market Research",
-  "Sourcing Analytics",
+  "Culture",
+  "Strategy"
 ] as const;
 
 const RESPONSIBILITY_OPTIONS = [
