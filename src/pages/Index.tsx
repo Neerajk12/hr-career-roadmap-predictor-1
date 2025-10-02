@@ -27,84 +27,181 @@ import {
 } from "@/components/ui/select";
 import { buildRoadmap, type Roadmap } from "@/components/roadmap/engine";
 
-// -------- canonical skills + synonyms (replace old SKILL_OPTIONS) --------
-const CANONICAL_SKILLS = [
-  "HR Operations",
-  "Recruitment",
-  "Payroll",
-  "Compliance",
-  "HR Policy",
-  "Data Analysis",
-  "People Analytics",
-  "HR Technology & Systems",
-  "Reporting",
-  "Talent Acquisition",
-  "Learning & Development",
-  "Performance Management",
-  "Compensation & Benefits",
-  "Benefits Administration",
-  "Career Development",
-  "Talent Management",
-  "Organizational Development",
-  "Change Management",
-  "Employee Engagement",
-  "Employee Relations",
-  "Labor / Industrial Relations",
-  "DEI Strategy",
-  "HR Strategy",
-  "Business Leadership",
-  "Team Leadership",
-  "Project Management",
-  "Conflict Resolution",
-  "Succession Planning",
-] as const;
+// ---------------- role-priority mapping for skills ----------------
+// Role => ordered list of the most relevant canonical skills for that role.
+// Built from common competency maps (SHRM, CIPD) and role descriptions (AIHR, Indeed).
+const ROLE_SKILL_PRIORITY: Record<string, string[]> = {
+  "HR Assistant / HR Executive": [
+    "HR Operations",
+    "Recruitment",
+    "Onboarding",            // UI label may map to canonical Learning & Development / HR Operations
+    "Payroll",
+    "HR Policy",
+    "Documentation",
+  ],
+  "Recruitment Coordinator": [
+    "Talent Acquisition",
+    "Recruitment",
+    "Sourcing",
+    "Reporting",
+    "Candidate funnel analysis" // if used in SKILL_OPTIONS; otherwise will be ignored
+  ],
+  "Talent Acquisition Executive": [
+    "Talent Acquisition",
+    "Recruitment",
+    "Employer branding",      // ui-only: maps to Talent Acquisition context
+    "People Analytics",
+    "HR Technology & Systems"
+  ],
+  "Recruiter/Recruitment Manager": [
+    "Talent Acquisition",
+    "Recruitment",
+    "Stakeholder Management",
+    "Reporting",
+    "People Analytics"
+  ],
+  "Senior Recruiter": [
+    "Talent Acquisition",
+    "People Analytics",
+    "Stakeholder Management",
+    "Employer branding"
+  ],
+  "Talent Acquisition Manager": [
+    "Talent Acquisition",
+    "Talent Management",
+    "People Analytics",
+    "Stakeholder Management",
+    "HR Technology & Systems"
+  ],
+  "HR Generalist/Operations Specialist": [
+    "HR Operations",
+    "Compliance",
+    "HR Policy",
+    "Payroll",
+    "Employee Engagement",
+    "HR Technology & Systems"
+  ],
+  "Payroll Executive": [
+    "Payroll",
+    "Payroll", // kept for clarity in mapping; normalize will dedupe
+    "Compliance",
+    "Reporting",
+    "Data Analysis"
+  ],
+  "Payroll Manager": [
+    "Payroll",
+    "Compensation & Benefits",
+    "Reporting",
+    "Compliance",
+    "HR Policy"
+  ],
+  "Compensation & Benefits Specialist": [
+    "Compensation & Benefits",
+    "Benefits Administration",
+    "Salary analysis",
+    "Data Analysis"
+  ],
+  "Learning & Development Specialist": [
+    "Learning & Development",
+    "Training",
+    "Career Development",
+    "Instructional design" // UI label fallback — will be title-cased if present
+  ],
+  "L&D Manager": [
+    "Learning & Development",
+    "Talent Management",
+    "Stakeholder Management",
+    "Project Management"
+  ],
+  "HRIS Analyst": [
+    "HR Technology & Systems",
+    "HR Technology & Systems", // duplicate entry ok (dedupe happens later)
+    "Reporting",
+    "Data Analysis"
+  ],
+  "HRIS Manager": [
+    "HR Technology & Systems",
+    "Project Management",
+    "Change Management",
+    "Stakeholder Management"
+  ],
+  "HR Business Partner (HRBP)": [
+    "Stakeholder Management",
+    "Talent Management",
+    "Organizational Development",
+    "Business Leadership",
+    "People Analytics"
+  ],
+  "HR Manager": [
+    "HR Operations",
+    "Talent Management",
+    "Performance Management",
+    "Stakeholder Management",
+    "HR Strategy"
+  ],
+  "HR Director": [
+    "HR Strategy",
+    "Business Leadership",
+    "Organizational Development"
+  ],
+  "CHRO": [
+    "HR Strategy",
+    "Business Leadership",
+    "Culture"
+  ],
+  "VP of HR": [
+    "HR Strategy",
+    "Business Leadership",
+    "Stakeholder Management"
+  ],
+  // fallback entry for roles not listed explicitly
+  "default": [
+    "HR Operations",
+    "Talent Acquisition",
+    "Learning & Development",
+    "Data Analysis",
+    "HR Technology & Systems"
+  ]
+};
 
-// Presentational options for the UI — this list may contain phrasing variants
-// but will be normalized by the mapping logic below.
-const SKILL_OPTIONS = [
-  "HR Operations",
-  "Recruitment",
-  "Payroll",
-  "Compliance",
-  "Policy",
-  "Data Management",
-  "Data Analysis",
-  "Analytics",
-  "Reporting",
-  "HR Technology & Systems",
-  "HRIS",
-  "Talent Acquisition",
-  "Talent Management",
-  "Learning & Development",
-  "Training",
-  "Performance Management",
-  "Compensation Design",
-  "Compensation & Benefits",
-  "Benefits Strategy",
-  "Career Development",
-  "Organizational Development",
-  "Change Management",
-  "Conflict Resolution",
-  "Employee Engagement",
-  "Employee Relations",
-  "Labor Law",
-  "DEI Strategy",
-  "HR Strategy",
-  "Business Leadership",
-  "Team Leadership",
-  "Project Management",
-  "Succession Planning",
-] as const;
+// --------------- Helper: order skills by role priority ---------------
+/**
+ * Reorders an array of skill labels so that items in ROLE_SKILL_PRIORITY for the given role
+ * appear first (in priority order), then the remaining items (preserve original SKILL_OPTIONS order).
+ *
+ * @param role - currentRole string (may be empty/null)
+ * @param allSkills - array of presentational skill labels (SKILL_OPTIONS)
+ * @returns ordered array of skill labels (deduped)
+ */
+function orderByRoleForSkills(role: string | undefined | null, allSkills: readonly string[]) {
+  const roleKey = role && ROLE_SKILL_PRIORITY[role] ? role : "default";
+  const priority = ROLE_SKILL_PRIORITY[roleKey] || ROLE_SKILL_PRIORITY["default"];
+  const prioritySet = new Set(priority.map((p) => p.toLowerCase()));
 
-// synonyms mapping -> canonical name (lowercased keys)
-const SKILL_SYNONYMS: Record<string, string> = {
-  "policy": "HR Policy",
-  "policy planning": "HR Policy",
+  // Find matching presentational labels in allSkills for prioritized items (case-insensitive)
+  const prioritized: string[] = [];
+  priority.forEach((p) => {
+    const match = allSkills.find((s) => s.toLowerCase() === p.toLowerCase());
+    if (match && !prioritized.includes(match)) prioritized.push(match);
+  });
+
+  // Remaining items: preserve original order but exclude prioritized ones
+  const remaining = allSkills.filter((s) => !prioritySet.has(s.toLowerCase()) && !prioritized.includes(s));
+
+  return [...prioritized, ...remaining];
+}
+
+// ---------------- updated SKILL_SYNONYMS + normalizeSkill (keeps your existing logic) ----------------
+const SKILL_SYNONYMS_UPDATED: Record<string, string> = {
+  ...SKILL_SYNONYMS, // preserve existing synonyms you defined earlier
+  "hr operations": "HR Operations",
+  "hr policy": "HR Policy",
+  "hr policy planning": "HR Policy",
   "data management": "Data Analysis",
   "analytics": "Data Analysis",
   "reporting": "Reporting",
   "hris": "HR Technology & Systems",
-  "hrtech": "HR Technology & Systems",
+  "hr tech": "HR Technology & Systems",
   "compensation design": "Compensation & Benefits",
   "benefits strategy": "Compensation & Benefits",
   "benefits administration": "Benefits Administration",
@@ -113,36 +210,34 @@ const SKILL_SYNONYMS: Record<string, string> = {
   "recruitment": "Recruitment",
   "labour law": "Labor / Industrial Relations",
   "labor law": "Labor / Industrial Relations",
-  // add more synonyms as you notice them in data
+  // add more as needed
 };
 
-// Normalizer: map a free-text skill to a canonical one.
-function normalizeSkill(raw: string): string {
+function normalizeSkillUpdated(raw: string): string {
   if (!raw) return raw;
   const trimmed = raw.trim();
   const lc = trimmed.toLowerCase();
 
-  // exact match to canonical (case-insensitive)
+  // exact match to canonical
   const exact = CANONICAL_SKILLS.find((c) => c.toLowerCase() === lc);
   if (exact) return exact;
 
-  // synonyms map
-  if (SKILL_SYNONYMS[lc]) return SKILL_SYNONYMS[lc];
+  // synonyms map (use updated map)
+  if (SKILL_SYNONYMS_UPDATED[lc]) return SKILL_SYNONYMS_UPDATED[lc];
 
-  // small fuzzy whitelist (common patterns)
+  // fuzzy patterns
   if (lc.includes("payroll")) return "Payroll";
   if (lc.includes("compens") || lc.includes("benefit")) return "Compensation & Benefits";
   if (lc.includes("analyt") || lc.includes("data")) return "Data Analysis";
   if (lc.includes("hris") || lc.includes("hr tech")) return "HR Technology & Systems";
-  if (lc.includes("DEI") || lc.includes("divers")) return "DEI Strategy";
+  if (lc.includes("dei") || lc.includes("divers")) return "DEI Strategy";
   if (lc.includes("learning") || lc.includes("training")) return "Learning & Development";
   if (lc.includes("performance")) return "Performance Management";
   if (lc.includes("policy")) return "HR Policy";
-  
-  // fallback: Title-case and return (so it still shows up)
+
+  // fallback: Title-case
   return trimmed.replace(/\w\S*/g, (w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
 }
-
 const CANONICAL_RESPONSIBILITIES = [
   "Interview scheduling",
   "Interviewing",
@@ -402,28 +497,51 @@ const Index = () => {
     return () => el.removeEventListener("mousemove", onMove);
   }, []);
 
- const onSubmit = (values: FormValues) => {
-  // normalize and dedupe skills
-  const normalizedSkills = Array.from(
-    new Set((values.skills || []).map((s) => normalizeSkill(s)))
+// ----------------- Update onSubmit to normalize, order, and dedupe skills -----------------
+const onSubmit = (values: FormValues) => {
+  // Step 1: normalize all selected skills (map synonyms -> canonical)
+  const rawNormalizedSkills = (values.skills || []).map((s) => normalizeSkillUpdated(s));
+
+  // Step 2: get the ordered presentational skill list according to role (so we know priority order)
+  const orderedPresentationalSkills = orderByRoleForSkills(values.currentRole, SKILL_OPTIONS);
+
+  // Step 3: produce final ordered + deduped skills:
+  //  - keep only those the user selected
+  //  - preserve the order of orderedPresentationalSkills for those items
+  //  - append any normalized skills that weren't matched to SKILL_OPTIONS (fallback)
+  const selectedSet = new Set(rawNormalizedSkills.map((s) => s.toLowerCase()));
+  // map presentational label -> normalized canonical name (if available) using normalizeSkillUpdated
+  const orderedAndSelected: string[] = orderedPresentationalSkills
+    .filter((label) => {
+      // determine canonical for this label
+      const canonical = normalizeSkillUpdated(label);
+      return selectedSet.has(canonical.toLowerCase()) || selectedSet.has(label.toLowerCase());
+    })
+    .map((label) => normalizeSkillUpdated(label)); // canonicalize them
+
+  // any normalized skills selected that were not included above (custom entries or mismatches)
+  const remainder = rawNormalizedSkills.filter(
+    (s) => !orderedAndSelected.some((p) => p.toLowerCase() === s.toLowerCase())
   );
 
-  // normalize and dedupe responsibilities
-  const normalizedResponsibilities = Array.from(
-    new Set((values.responsibilities || []).map((r) => normalizeResponsibility(r)))
-  );
+  // final unique list, prioritized
+  const normalizedSkills = Array.from(new Set([...orderedAndSelected, ...remainder]));
 
+  // Build roadmap (if your buildRoadmap now accepts arrays, pass normalizedSkills directly;
+  // here we pass arrays — update buildRoadmap signature if needed)
   const roadmap = buildRoadmap({
     fullName: values.fullName,
     email: values.email,
     currentRole: values.currentRole,
     yearsExperience: Number(values.yearsExperience),
-    skills: normalizedSkills,
-    // keep passing responsibilities as a joined string (existing buildRoadmap expects string)
-    responsibilities: normalizedResponsibilities.join(", "),
+    skills: normalizedSkills, // array of canonical skill names, ordered by role priority
+    responsibilities: values.responsibilities.join(", "),
   });
   setResult(roadmap);
 };
+// ----------------- Export helpers for UI usage -----------------
+// Use orderByRoleForSkills(form.watch('currentRole'), SKILL_OPTIONS) to render checkboxes ordered.
+export { orderByRoleForSkills, ROLE_SKILL_PRIORITY };
 
   const jsonLd = useMemo(
     () => ({
