@@ -191,9 +191,41 @@ function orderByRoleForSkills(role: string | undefined | null, allSkills: readon
   return [...prioritized, ...remaining];
 }
 
+// ---------------- SKILL_OPTIONS (presentational labels for UI) ----------------
+const SKILL_OPTIONS = [
+  "Recruitment",
+  "Talent Acquisition",
+  "Onboarding",
+  "HR Operations",
+  "Payroll",
+  "Compliance",
+  "HR Policy",
+  "Compensation & Benefits",
+  "Benefits Administration",
+  "Performance Management",
+  "Learning & Development",
+  "Employee Engagement",
+  "Culture",
+  "DEI Strategy",
+  "Labor / Industrial Relations",
+  "Conflict Resolution & Grievance Handling",
+  "HR Technology & Systems",
+  "Data Analytics & Reporting",
+  "People Analytics",
+  "Project & Program Management",
+  "Change Management",
+  "Talent Management",
+  "Organizational Development",
+  "Stakeholder Management",
+  "Business Leadership",
+  "HR Strategy",
+] as const;
+
+// ---------------- CANONICAL_SKILLS (list of canonical skill names) ----------------
+const CANONICAL_SKILLS = [...SKILL_OPTIONS]; // All presentational labels are also canonical
+
 // ---------------- updated SKILL_SYNONYMS + normalizeSkill (keeps your existing logic) ----------------
-const SKILL_SYNONYMS_UPDATED: Record<string, string> = {
-  ...SKILL_SYNONYMS, // preserve existing synonyms you defined earlier
+const SKILL_SYNONYMS: Record<string, string> = {
   "hr operations": "HR Operations",
   "hr policy": "HR Policy",
   "hr policy planning": "HR Policy",
@@ -222,8 +254,8 @@ function normalizeSkillUpdated(raw: string): string {
   const exact = CANONICAL_SKILLS.find((c) => c.toLowerCase() === lc);
   if (exact) return exact;
 
-  // synonyms map (use updated map)
-  if (SKILL_SYNONYMS_UPDATED[lc]) return SKILL_SYNONYMS_UPDATED[lc];
+  // synonyms map
+  if (SKILL_SYNONYMS[lc]) return SKILL_SYNONYMS[lc];
 
   // fuzzy patterns
   if (lc.includes("payroll")) return "Payroll";
@@ -539,9 +571,6 @@ const onSubmit = (values: FormValues) => {
   });
   setResult(roadmap);
 };
-// ----------------- Export helpers for UI usage -----------------
-// Use orderByRoleForSkills(form.watch('currentRole'), SKILL_OPTIONS) to render checkboxes ordered.
-export { orderByRoleForSkills, ROLE_SKILL_PRIORITY };
 
   const jsonLd = useMemo(
     () => ({
