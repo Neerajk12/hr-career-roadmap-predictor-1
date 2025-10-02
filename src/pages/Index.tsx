@@ -27,53 +27,173 @@ import {
 } from "@/components/ui/select";
 import { buildRoadmap, type Roadmap } from "@/components/roadmap/engine";
 
-const SKILL_OPTIONS = [
-  // Entry Level & Operational Skills (0-2 years)
+// -------- canonical skills + synonyms (replace old SKILL_OPTIONS) --------
+const CANONICAL_SKILLS = [
   "HR Operations",
-  "Recruitment", 
+  "Recruitment",
   "Payroll",
   "Compliance",
-  "Data Management",
-  "Policy",
-  
-  // Functional Specialist Skills (2-5 years)
+  "HR Policy",
+  "Data Analysis",
+  "People Analytics",
+  "HR Technology & Systems",
+  "Reporting",
   "Talent Acquisition",
-  "Employee Relations", 
   "Learning & Development",
   "Performance Management",
-  "Compensation Design",
-  "Benefits Strategy",
+  "Compensation & Benefits",
+  "Benefits Administration",
   "Career Development",
-  "Training",
+  "Talent Management",
+  "Organizational Development",
+  "Change Management",
   "Employee Engagement",
-  
-  // Technical & Systems Skills
-  "HR Technology & Systems",
+  "Employee Relations",
+  "Labor / Industrial Relations",
+  "DEI Strategy",
+  "HR Strategy",
+  "Business Leadership",
+  "Team Leadership",
+  "Project Management",
+  "Conflict Resolution",
+  "Succession Planning",
+] as const;
+
+// Presentational options for the UI — this list may contain phrasing variants
+// but will be normalized by the mapping logic below.
+const SKILL_OPTIONS = [
+  "HR Operations",
+  "Recruitment",
+  "Payroll",
+  "Compliance",
+  "Policy",
+  "Data Management",
   "Data Analysis",
   "Analytics",
   "Reporting",
-  
-  // Management & Strategic Skills (5-10 years)
+  "HR Technology & Systems",
+  "HRIS",
+  "Talent Acquisition",
   "Talent Management",
-  "Stakeholder Management",
-  "Project Management",
+  "Learning & Development",
+  "Training",
+  "Performance Management",
+  "Compensation Design",
+  "Compensation & Benefits",
+  "Benefits Strategy",
+  "Career Development",
   "Organizational Development",
   "Change Management",
   "Conflict Resolution",
-  "Grievance Handling",
+  "Employee Engagement",
+  "Employee Relations",
   "Labor Law",
-  
-  // Leadership & Executive Skills (10+ years)
-  "HR Strategy",
-  "Business Leadership", 
-  "Team Leadership",
-  "HR Transformation",
-  "Succession Planning",
   "DEI Strategy",
-  "Culture",
-  "Strategy"
+  "HR Strategy",
+  "Business Leadership",
+  "Team Leadership",
+  "Project Management",
+  "Succession Planning",
 ] as const;
 
+// synonyms mapping -> canonical name (lowercased keys)
+const SKILL_SYNONYMS: Record<string, string> = {
+  "policy": "HR Policy",
+  "policy planning": "HR Policy",
+  "data management": "Data Analysis",
+  "analytics": "Data Analysis",
+  "reporting": "Reporting",
+  "hris": "HR Technology & Systems",
+  "hrtech": "HR Technology & Systems",
+  "compensation design": "Compensation & Benefits",
+  "benefits strategy": "Compensation & Benefits",
+  "benefits administration": "Benefits Administration",
+  "training": "Learning & Development",
+  "talent acquisition": "Talent Acquisition",
+  "recruitment": "Recruitment",
+  "labour law": "Labor / Industrial Relations",
+  "labor law": "Labor / Industrial Relations",
+  // add more synonyms as you notice them in data
+};
+
+// Normalizer: map a free-text skill to a canonical one.
+function normalizeSkill(raw: string): string {
+  if (!raw) return raw;
+  const trimmed = raw.trim();
+  const lc = trimmed.toLowerCase();
+
+  // exact match to canonical (case-insensitive)
+  const exact = CANONICAL_SKILLS.find((c) => c.toLowerCase() === lc);
+  if (exact) return exact;
+
+  // synonyms map
+  if (SKILL_SYNONYMS[lc]) return SKILL_SYNONYMS[lc];
+
+  // small fuzzy whitelist (common patterns)
+  if (lc.includes("payroll")) return "Payroll";
+  if (lc.includes("compens") || lc.includes("benefit")) return "Compensation & Benefits";
+  if (lc.includes("analyt") || lc.includes("data")) return "Data Analysis";
+  if (lc.includes("hris") || lc.includes("hr tech")) return "HR Technology & Systems";
+  if (lc.includes("DEI") || lc.includes("divers")) return "DEI Strategy";
+  if (lc.includes("learning") || lc.includes("training")) return "Learning & Development";
+  if (lc.includes("performance")) return "Performance Management";
+  if (lc.includes("policy")) return "HR Policy";
+  
+  // fallback: Title-case and return (so it still shows up)
+  return trimmed.replace(/\w\S*/g, (w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
+}
+
+const CANONICAL_RESPONSIBILITIES = [
+  "Interview scheduling",
+  "Interviewing",
+  "Sourcing",
+  "Full cycle hiring",
+  "Onboarding",
+  "Documentation",
+  "Training coordination",
+  "Training delivery",
+  "Payroll processing",
+  "Payroll calculations",
+  "Statutory reporting",
+  "Policy administration",
+  "Audits",
+  "Compliance & Reporting",
+  "Team management",
+  "People / Team leadership",
+  "Benefits administration",
+  "Salary analysis",
+  "Employee queries / support",
+  "Design pay structures",
+  "Manage benefits",
+  "Engagement programs",
+  "Learning & Development programs",
+  "Content curation",
+  "Evaluation & assessments",
+  "Grievance handling",
+  "Union / Labor relations",
+  "Investigations",
+  "Policy planning",
+  "Overseeing department functions",
+  "Business integration",
+  "HR vision / People strategy",
+  "Board liaison",
+  "Advising organizations",
+  "Solution design",
+  "HR system management",
+  "Reporting & analytics",
+  "Tech implementation",
+  "User training (systems)",
+  "Talent pipeline management",
+  "Development plans",
+  "Change initiatives",
+  "Culture programs",
+  "DEI implementation",
+  "Hiring KPIs tracking",
+  "Candidate funnel analysis",
+  "Market mapping",
+] as const;
+
+// keep your existing UI-friendly list (you may reuse original RESPONSIBILITY_OPTIONS)
 const RESPONSIBILITY_OPTIONS = [
   "Interview scheduling",
   "Onboarding",
@@ -131,6 +251,83 @@ const RESPONSIBILITY_OPTIONS = [
   "Analyze recruitment data",
   "Market mapping",
 ] as const;
+
+// synonyms mapping for responsibilities (lowercased keys)
+const RESPONSIBILITY_SYNONYMS: Record<string, string> = {
+  "payroll": "Payroll processing",
+  "payroll calculations": "Payroll calculations",
+  "oversee payroll processes": "Payroll processing",
+  "statutory reporting": "Statutory reporting",
+  "policy administration": "Policy administration",
+  "policy planning": "Policy planning",
+  "engagement programs": "Engagement programs",
+  "lead l&d programs": "Learning & Development programs",
+  "training coordination": "Training coordination",
+  "training delivery": "Training delivery",
+  "manage tech implementation": "Tech implementation",
+  "hr system management": "HR system management",
+  "user training": "User training (systems)",
+  "manage talent pipelines": "Talent pipeline management",
+  "manage benefits": "Benefits administration",
+  "design pay structures": "Design pay structures",
+  "team management": "Team management",
+  "team leadership": "People / Team leadership",
+  "full cycle hiring": "Full cycle hiring",
+  "leading recruitment campaigns": "Full cycle hiring",
+  "sourcing": "Sourcing",
+  "interview scheduling": "Interview scheduling",
+  "interviewing": "Interviewing",
+  "onboarding": "Onboarding",
+  "compliance": "Compliance & Reporting",
+  "compliance audits": "Compliance & Reporting",
+  "grievance handling": "Grievance handling",
+  "union relations": "Union / Labor relations",
+  "analyze recruitment data": "Reporting & analytics",
+  "analyze candidate funnel": "Candidate funnel analysis",
+  "track hiring kpis": "Hiring KPIs tracking",
+  "track compliance": "Compliance & Reporting",
+  "culture programs": "Culture programs",
+  "implement diversity initiatives": "DEI implementation",
+  "development plans": "Development plans",
+  // add more mappings as you see new phrases
+};
+
+// normalize responsibility text -> canonical responsibility
+function normalizeResponsibility(raw: string): string {
+  if (!raw) return raw;
+  const trimmed = raw.trim();
+  const lc = trimmed.toLowerCase();
+
+  // exact canonical match
+  const exact = CANONICAL_RESPONSIBILITIES.find((c) => c.toLowerCase() === lc);
+  if (exact) return exact;
+
+  // synonyms map
+  if (RESPONSIBILITY_SYNONYMS[lc]) return RESPONSIBILITY_SYNONYMS[lc];
+
+  // pattern-based heuristics
+  if (lc.includes("payroll")) return "Payroll processing";
+  if (lc.includes("onboard")) return "Onboarding";
+  if (lc.includes("training")) {
+    if (lc.includes("coord")) return "Training coordination";
+    return "Training delivery";
+  }
+  if (lc.includes("policy")) return "Policy administration";
+  if (lc.includes("benefit")) return "Benefits administration";
+  if (lc.includes("recruit")) return "Full cycle hiring";
+  if (lc.includes("sourc")) return "Sourcing";
+  if (lc.includes("engag")) return "Engagement programs";
+  if (lc.includes("audit")) return "Audits";
+  if (lc.includes("griev")) return "Grievance handling";
+  if (lc.includes("union") || lc.includes("labour")) return "Union / Labor relations";
+  if (lc.includes("report")) return "Reporting & analytics";
+  if (lc.includes("tech") || lc.includes("system")) return "HR system management";
+  if (lc.includes("culture")) return "Culture programs";
+  if (lc.includes("kpi")) return "Hiring KPIs tracking";
+
+  // fallback: Title-case the phrase
+  return trimmed.replace(/\w\S*/g, (w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
+}
 
 const ROLE_OPTIONS = [
   "HR Assistant / HR Executive",
@@ -205,17 +402,28 @@ const Index = () => {
     return () => el.removeEventListener("mousemove", onMove);
   }, []);
 
-  const onSubmit = (values: FormValues) => {
-    const roadmap = buildRoadmap({
-      fullName: values.fullName,
-      email: values.email,
-      currentRole: values.currentRole,
-      yearsExperience: Number(values.yearsExperience),
-      skills: values.skills,
-      responsibilities: values.responsibilities.join(", "),
-    });
-    setResult(roadmap);
-  };
+ const onSubmit = (values: FormValues) => {
+  // normalize and dedupe skills
+  const normalizedSkills = Array.from(
+    new Set((values.skills || []).map((s) => normalizeSkill(s)))
+  );
+
+  // normalize and dedupe responsibilities
+  const normalizedResponsibilities = Array.from(
+    new Set((values.responsibilities || []).map((r) => normalizeResponsibility(r)))
+  );
+
+  const roadmap = buildRoadmap({
+    fullName: values.fullName,
+    email: values.email,
+    currentRole: values.currentRole,
+    yearsExperience: Number(values.yearsExperience),
+    skills: normalizedSkills,
+    // keep passing responsibilities as a joined string (existing buildRoadmap expects string)
+    responsibilities: normalizedResponsibilities.join(", "),
+  });
+  setResult(roadmap);
+};
 
   const jsonLd = useMemo(
     () => ({
